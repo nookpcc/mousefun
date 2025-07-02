@@ -18,6 +18,16 @@ interface GameContainerProps {
 const GameContainer: React.FC<GameContainerProps> = ({ games, currentGameIndex, gameKey, onSelectGame, onNextGame, onPrevGame }) => {
   const { gameProgress, updateGameProgress } = useGameStore();
   const fonts = useFontClasses();
+
+  // Listen for nextGame event from games
+  React.useEffect(() => {
+    const handleNextGame = () => {
+      onNextGame();
+    };
+
+    window.addEventListener('nextGame', handleNextGame);
+    return () => window.removeEventListener('nextGame', handleNextGame);
+  }, [onNextGame]);
   
   const currentGame = games[currentGameIndex];
   const currentProgress = gameProgress[currentGame.id] || {
@@ -28,15 +38,9 @@ const GameContainer: React.FC<GameContainerProps> = ({ games, currentGameIndex, 
     completed: false
   };
 
-  const handleStarEarned = (stars: number) => {
-    const newProgress = {
-      ...currentProgress,
-      stars: Math.max(currentProgress.stars, stars),
-      timesPlayed: currentProgress.timesPlayed + 1,
-      completed: stars >= 5
-    };
-    updateGameProgress(currentGame.id, newProgress);
-  };
+  const handleStarEarned = React.useCallback((stars: number) => {
+    updateGameProgress(currentGame.id, stars);
+  }, [currentGame.id, updateGameProgress]);
 
   const handleGameComplete = (completed: boolean) => {
     // Auto advance logic can be handled by parent component
@@ -49,33 +53,7 @@ const GameContainer: React.FC<GameContainerProps> = ({ games, currentGameIndex, 
 
   return (
     <div className="relative">
-      {/* Stars Display - Top Right */}
-      <div className="absolute top-4 right-4 z-20">
-        <motion.div
-          className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-        >
-          <StarRating 
-            stars={currentProgress.stars} 
-            size="md"
-            showAnimation={true}
-          />
-        </motion.div>
-      </div>
-
-      {/* Game Title - Top Left */}
-      <div className="absolute top-4 left-4 z-20">
-        <motion.div
-          className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-        >
-          <h2 className={`${fonts.kid} text-lg text-gray-800`}>
-            {currentGame.title}
-          </h2>
-        </motion.div>
-      </div>
+      {/* UI is now handled by individual games */}
 
       {/* Game Area */}
       <div 

@@ -1,103 +1,45 @@
 import { GameData } from '../types';
 import { useLanguage } from '../contexts/LanguageContext';
-import BubblePopGame from '../games/BubblePopGame';
-import MouseTrailGame from '../games/MouseTrailGame';
-import ClickTargetGame from '../games/ClickTargetGame';
+import { 
+  MouseTrailGame,
+  HouseExplorerGame,
+  BubblePopGame,
+  ClickTargetGame,
+  BalloonPopGame,
+  ShapeSortGame,
+  ActionClickerGame,
+  PuzzlePiecesGame,
+  MazeRunnerGame,
+  FruitCatchGame,
+  ScrollChallengeGame,
+  AreaCoverGame,
+} from '../games';
 
-// Static game data with translation keys
+// Static game data with translation keys, re-ordered by skill progression
 export const gameDataStatic = [
+  // 1. House Explorer
   {
-    id: 'bubble-pop',
+    id: 'house-explorer',
     titleKey: 'title',
     descriptionKey: 'description',
     difficulty: 'easy' as const,
-    category: 'clicking' as const,
-    thumbnail: '🫧',
-    rating: 5,
-    playCount: 15420,
-    stars: 0,
-    backgroundColor: 'linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%)',
-    component: BubblePopGame
+    category: 'pointing' as const,
+    thumbnail: '🏠',
+    backgroundColor: 'linear-gradient(135deg, #dbeafe 0%, #d1fae5 100%)',
+    component: HouseExplorerGame
   },
+  // 2. Gem Collector (Mouse Trail)
   {
     id: 'mouse-trail',
     titleKey: 'title',
     descriptionKey: 'description',
     difficulty: 'easy' as const,
     category: 'movement' as const,
-    thumbnail: '⭐',
-    rating: 4,
-    playCount: 12890,
-    stars: 0,
+    thumbnail: '🌟',
     backgroundColor: 'linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%)',
     component: MouseTrailGame
   },
-  {
-    id: 'click-target',
-    titleKey: 'title',
-    descriptionKey: 'description',
-    difficulty: 'medium' as const,
-    category: 'clicking' as const,
-    thumbnail: '🎯',
-    rating: 4,
-    playCount: 9560,
-    stars: 0,
-    backgroundColor: 'linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%)',
-    component: ClickTargetGame
-  },
-  // Add more games with placeholder data
-  {
-    id: 'maze-runner',
-    titleKey: 'title',
-    descriptionKey: 'description',
-    difficulty: 'medium' as const,
-    category: 'movement' as const,
-    thumbnail: '🏃‍♂️',
-    rating: 4,
-    playCount: 8320,
-    stars: 0,
-    backgroundColor: 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)',
-    component: BubblePopGame
-  },
-  {
-    id: 'color-match',
-    titleKey: 'title',
-    descriptionKey: 'description',
-    difficulty: 'easy' as const,
-    category: 'dragging' as const,
-    thumbnail: '🎨',
-    rating: 5,
-    playCount: 11240,
-    stars: 0,
-    backgroundColor: 'linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%)',
-    component: BubblePopGame
-  },
-  {
-    id: 'fruit-catch',
-    titleKey: 'title',
-    descriptionKey: 'description',
-    difficulty: 'medium' as const,
-    category: 'clicking' as const,
-    thumbnail: '🍎',
-    rating: 4,
-    playCount: 7890,
-    stars: 0,
-    backgroundColor: 'linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%)',
-    component: BubblePopGame
-  },
-  {
-    id: 'shape-sort',
-    titleKey: 'title',
-    descriptionKey: 'description',
-    difficulty: 'hard' as const,
-    category: 'dragging' as const,
-    thumbnail: '🔷',
-    rating: 3,
-    playCount: 5670,
-    stars: 0,
-    backgroundColor: 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)',
-    component: BubblePopGame
-  },
+  // 3. Balloon Pop
   {
     id: 'balloon-pop',
     titleKey: 'title',
@@ -105,25 +47,65 @@ export const gameDataStatic = [
     difficulty: 'easy' as const,
     category: 'clicking' as const,
     thumbnail: '🎈',
-    rating: 5,
-    playCount: 13450,
-    stars: 0,
-    backgroundColor: 'linear-gradient(135deg, #f1f8e9 0%, #dcedc8 100%)',
-    component: BubblePopGame
+    backgroundColor: 'linear-gradient(135deg, #dbeafe 0%, #d1fae5 100%)',
+    component: BalloonPopGame
   },
+  // 4. Click Master
   {
-    id: 'puzzle-pieces',
+    id: 'action-clicker',
+    titleKey: 'actionClickerTitle',
+    descriptionKey: 'actionClickerDescription',
+    difficulty: 'medium' as const,
+    category: 'clicking' as const,
+    thumbnail: '🖱️',
+    backgroundColor: 'linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%)',
+    component: ActionClickerGame
+  },
+  // 5. Scroll Challenge
+  {
+    id: 'scroll-challenge',
+    titleKey: 'scrollChallengeTitle',
+    descriptionKey: 'scrollChallengeDescription',
+    difficulty: 'medium' as const,
+    category: 'scrolling' as const,
+    thumbnail: '📜',
+    backgroundColor: 'linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%)',
+    component: ScrollChallengeGame
+  },
+  // 6. Shape Sort
+  {
+    id: 'shape-sort',
     titleKey: 'title',
     descriptionKey: 'description',
-    difficulty: 'hard' as const,
+    difficulty: 'easy' as const,
     category: 'dragging' as const,
-    thumbnail: '🧩',
-    rating: 4,
-    playCount: 4230,
-    stars: 0,
-    backgroundColor: 'linear-gradient(135deg, #fafafa 0%, #e0e0e0 100%)',
-    component: BubblePopGame
-  }
+    thumbnail: '🔷',
+    backgroundColor: 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)',
+    component: ShapeSortGame
+  },
+  // 7. Area Cover
+  {
+    id: 'area-cover',
+    titleKey: 'areaCoverTitle',
+    descriptionKey: 'areaCoverDescription',
+    difficulty: 'medium' as const,
+    category: 'dragging' as const,
+    thumbnail: '🔲',
+    backgroundColor: 'linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%)',
+    component: AreaCoverGame
+  },
+  
+  // 8. Maze Runner
+  {
+    id: 'maze-runner',
+    titleKey: 'title',
+    descriptionKey: 'description',
+    difficulty: 'medium' as const,
+    category: 'movement' as const,
+    thumbnail: '🏃‍♂️',
+    backgroundColor: 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)',
+    component: MazeRunnerGame
+  },
 ];
 
 // Hook to get translated game data
@@ -132,26 +114,11 @@ export const useGameData = (): GameData[] => {
   
   return gameDataStatic.map(game => ({
     ...game,
+    // Dummy data for properties that might not be in the static list
+    rating: 5,
+    playCount: 10000,
+    stars: 0,
     title: t(game.titleKey, game.id),
     description: t(game.descriptionKey, game.id)
   }));
-};
-
-// For components that can't use hooks
-export const gameData = gameDataStatic.map(game => ({
-  ...game,
-  title: game.id, // Will be replaced by translations
-  description: game.id // Will be replaced by translations
-}));
-
-export const getGameById = (id: string): GameData | undefined => {
-  return gameData.find(game => game.id === id);
-};
-
-export const getGamesByCategory = (category: string): GameData[] => {
-  return gameData.filter(game => game.category === category);
-};
-
-export const getGamesByDifficulty = (difficulty: string): GameData[] => {
-  return gameData.filter(game => game.difficulty === difficulty);
 };

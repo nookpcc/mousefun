@@ -11,9 +11,14 @@ export const translations = {
       instruction: 'คลิกที่ฟองสบู่ให้ได้มากที่สุด สนุกและฝึกความแม่นยำ'
     },
     'mouse-trail': {
-      title: 'เก็บดวงดาว',
-      description: 'เลื่อนเมาส์ไปเก็บดวงดาวให้ได้มากที่สุด!',
-      instruction: 'เลื่อนเมาส์ไปเก็บดวงดาวทุกดวง ฝึกการควบคุมเมาส์'
+      title: 'เก็บเพชร',
+      description: 'สร้างเส้นทางสีสวยด้วยการเลื่อนเมาส์ และเก็บเพชรให้ครบ!',
+      instruction: 'เลื่อนเมาส์ไปเก็บเพชรทุกเม็ด ฝึกการควบคุมเมาส์'
+    },
+    'house-explorer': {
+      title: 'สำรวจบ้าน',
+      description: 'ชี้เมาส์ไปยังห้องต่างๆ ในบ้าน เพื่อค้นพบความลับ!',
+      instruction: 'ชี้เมาส์ไปยังห้องต่างๆ และรอให้ค้นพบ ฝึกการชี้และรอ'
     },
     'click-target': {
       title: 'เป้าหมายแสนสนุก',
@@ -41,8 +46,8 @@ export const translations = {
       instruction: 'ลากรูปทรงไปยังตำแหน่งที่ถูกต้อง ฝึกการแยกแยะและลาก'
     },
     'balloon-pop': {
-      title: 'แทงลูกโป่ง',
-      description: 'แทงลูกโป่งสีสันสดใสให้ได้มากที่สุด!',
+      title: 'ทิ่มลูกโป่ง',
+      description: 'ทิ่มลูกโป่งสีสันสดใสให้ได้มากที่สุด!',
       instruction: 'คลิกลูกโป่งให้ได้มากที่สุด ฝึกความเร็วและความแม่นยำ'
     },
     'puzzle-pieces': {
@@ -50,6 +55,12 @@ export const translations = {
       description: 'ลากชิ้นจิ๊กซอว์ไปยังตำแหน่งที่ถูกต้อง!',
       instruction: 'ลากชิ้นปริศนาไปยังตำแหน่งที่ถูกต้อง ฝึกการแก้ปัญหา'
     },
+    actionClickerTitle: 'คลิกมาสเตอร์',
+    actionClickerDescription: 'คลิกซ้ายหรือขวาเพื่อตีเป้าหมาย! ทดสอบปฏิกิริยาตอบสนองปุ่มเมาส์ของคุณ',
+    scrollChallengeTitle: 'ท้าทายการเลื่อน',
+    scrollChallengeDescription: 'เลื่อนเมาส์เพื่อจับคู่ตัวเลขเป้าหมาย! ฝึกการควบคุมการเลื่อนของคุณ',
+    areaCoverTitle: 'คลุมพื้นที่',
+    areaCoverDescription: 'ลากเมาส์เพื่อสร้างกล่องเลือกและคลุมพื้นที่เป้าหมายให้ได้มากที่สุด!',
     
     // UI Elements
     startGame: 'เริ่มเล่น',
@@ -60,6 +71,8 @@ export const translations = {
     score: 'คะแนน',
     stars: 'ดาว',
     completed: 'จบแล้ว',
+    gems: 'เพชร',
+    nextGame: 'เกมถัดไป',
     
     // Footer
     footer: '© 2025 MouseFun - เกมฝึกทักษะเมาส์สำหรับเด็ก',
@@ -78,9 +91,14 @@ export const translations = {
       instruction: 'Click bubbles to pop them. Fun and practice accuracy'
     },
     'mouse-trail': {
-      title: 'Star Collector',
-      description: 'Move your mouse to collect all the stars!',
-      instruction: 'Move mouse to collect every star. Practice mouse control'
+      title: 'Gem Collector',
+      description: 'Create colorful trails by moving your mouse and collect gems!',
+      instruction: 'Move mouse to collect every gem. Practice mouse control'
+    },
+    'house-explorer': {
+      title: 'House Explorer',
+      description: 'Point your mouse to different rooms in the house to discover secrets!',
+      instruction: 'Point mouse to rooms and wait to discover. Practice pointing and waiting'
     },
     'click-target': {
       title: 'Target Practice',
@@ -117,6 +135,12 @@ export const translations = {
       description: 'Drag puzzle pieces to complete the picture!',
       instruction: 'Drag pieces to correct positions. Practice problem solving'
     },
+    actionClickerTitle: 'Click Master',
+    actionClickerDescription: 'Click left or right to hit the targets! Test your mouse button reflexes.',
+    scrollChallengeTitle: 'Scroll Challenge',
+    scrollChallengeDescription: 'Scroll your mouse to match the target numbers! Practice your scrolling control.',
+    areaCoverTitle: 'Area Cover',
+    areaCoverDescription: 'Drag your mouse to create a selection box and cover the target areas as much as possible!',
     
     // UI Elements
     startGame: 'Start Game',
@@ -127,6 +151,8 @@ export const translations = {
     score: 'Score',
     stars: 'Stars',
     completed: 'Completed',
+    gems: 'gems',
+    nextGame: 'Next Game',
     
     // Footer
     footer: '© 2025 MouseFun - Mouse Skills Training Games for Kids',
@@ -145,9 +171,14 @@ export const translations = {
       instruction: 'バブルをクリックして割ろう。楽しく正確性を練習'
     },
     'mouse-trail': {
-      title: 'スターコレクター',
-      description: 'マウスを動かしてすべての星を集めよう！',
-      instruction: 'マウスを動かして星を集めよう。マウス操作を練習'
+      title: '宝石集め',
+      description: 'マウスを動かしてカラフルな軌跡を作り、宝石を集めよう！',
+      instruction: 'マウスを動かして宝石を集めよう。マウス操作を練習'
+    },
+    'house-explorer': {
+      title: '家探検',
+      description: 'マウスを家の部屋に向けて、秘密を発見しよう！',
+      instruction: 'マウスを部屋に向けて待つ。ポインティングと待機を練習'
     },
     'click-target': {
       title: 'ターゲット練習',
@@ -184,6 +215,12 @@ export const translations = {
       description: 'パズルピースをドラッグして絵を完成しよう！',
       instruction: 'ピースを正しい位置にドラッグ。問題解決を練習'
     },
+    actionClickerTitle: 'クリックマスター',
+    actionClickerDescription: 'ターゲットをヒットするために左右をクリック！マウスボタンの反射神経をテストします。',
+    scrollChallengeTitle: 'スクロールチャレンジ',
+    scrollChallengeDescription: 'ターゲットの数字に合わせるためにマウスをスクロールしてください！スクロールコントロールを練習します。',
+    areaCoverTitle: 'エリアカバー',
+    areaCoverDescription: 'マウスをドラッグして選択ボックスを作成し、ターゲットエリアをできるだけ多くカバーしてください！',
     
     // UI Elements
     startGame: 'ゲーム開始',
@@ -194,6 +231,8 @@ export const translations = {
     score: 'スコア',
     stars: 'スター',
     completed: '完了',
+    gems: '宝石',
+    nextGame: '次のゲーム',
     
     // Footer
     footer: '© 2025 MouseFun - 子供向けマウススキル練習ゲーム',

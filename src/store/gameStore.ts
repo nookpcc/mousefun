@@ -10,7 +10,7 @@ interface GameStore {
   // Actions
   startGame: (gameId: string) => void;
   endGame: (completed: boolean, score?: number, starsEarned?: number) => void;
-  updateGameProgress: (gameId: string, progress: GameProgress) => void;
+  updateGameProgress: (gameId: string, stars: number) => void;
   addToFavorites: (gameId: string) => void;
   removeFromFavorites: (gameId: string) => void;
   unlockAchievement: (achievementId: string) => void;
@@ -59,20 +59,39 @@ export const useGameStore = create<GameStore>()(persist(
       }));
     },
 
-    updateGameProgress: (gameId: string, progress: GameProgress) => {
-      set((state) => ({
-        gameProgress: {
+    updateGameProgress: (gameId: string, stars: number) => {
+      set((state) => {
+        const currentProgress = state.gameProgress[gameId] || {
+          gameId,
+          stars: 0,
+          bestScore: 0,
+          timesPlayed: 0,
+          completed: false,
+        };
+
+        const newProgress: GameProgress = {
+          ...currentProgress,
+          stars: Math.max(currentProgress.stars, stars),
+          timesPlayed: currentProgress.timesPlayed + 1,
+          completed: currentProgress.completed || stars >= 5,
+        };
+
+        const newGameProgress = {
           ...state.gameProgress,
-          [gameId]: progress
-        },
-        stats: {
-          ...state.stats,
-          totalStars: Object.values({
-            ...state.gameProgress,
-            [gameId]: progress
-          }).reduce((total, prog) => total + prog.stars, 0)
-        }
-      }));
+          [gameId]: newProgress,
+        };
+
+        return {
+          gameProgress: newGameProgress,
+          stats: {
+            ...state.stats,
+            totalStars: Object.values(newGameProgress).reduce(
+              (total, prog) => total + prog.stars,
+              0
+            ),
+          },
+        };
+      });
     },
 
     addToFavorites: (gameId: string) => {
