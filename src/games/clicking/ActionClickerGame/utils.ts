@@ -1,0 +1,30 @@
+import { Target, ActionClickerLevel, ClickType } from './types';
+import { GAME_BOUNDS } from '../../shared/constants';
+
+export const generateTarget = (level: ActionClickerLevel): Target => {
+  const size = Math.floor(Math.random() * (level.maxSize - level.minSize + 1)) + level.minSize;
+  const x = Math.random() * (GAME_BOUNDS.WIDTH - size);
+  const y = Math.random() * (GAME_BOUNDS.HEIGHT - size);
+  const clickType: ClickType = Math.random() < 0.5 ? 'left' : 'right';
+  const points = Math.floor(Math.random() * (level.maxPoints - level.minPoints + 1)) + level.minPoints;
+
+  return {
+    id: `target-${Date.now()}-${Math.random()}`,
+    position: { x, y },
+    size,
+    clickType,
+    isHit: false,
+    isActive: true,
+    points,
+  };
+};
+
+export const shouldSpawnTarget = (currentTargets: Target[], maxTargets: number): boolean => {
+  return currentTargets.filter(t => t.isActive).length < maxTargets;
+};
+
+export const updateTargetLifetime = (target: Target, deltaTime: number): Target => {
+  // For ActionClickerGame, targets don't have a lifetime that makes them disappear
+  // They only disappear when hit or when a new level starts
+  return target;
+};
