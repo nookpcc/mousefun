@@ -5,14 +5,13 @@ import { useFontClasses } from '../../../hooks/useFontClasses';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { HouseRoom, HouseExplorerGameState } from './types';
 import { HOUSE_EXPLORER_STAR_LEVELS, DISCOVERY_DELAY } from './constants';
-import { initializeRooms, isMouseOverRoom, getRoomStyle, calculateProgress } from './utils';
+import { initializeRooms, isMouseOverRoom, getRoomStyle } from './utils';
 
 interface HouseExplorerGameProps extends GameProps {}
 
 const HouseExplorerGame: React.FC<HouseExplorerGameProps> = ({ 
   onStarEarned, 
   onGameComplete, 
-  currentStars = 0,
   gameKey = 0
 }) => {
   const fonts = useFontClasses();
@@ -34,7 +33,7 @@ const HouseExplorerGame: React.FC<HouseExplorerGameProps> = ({
   const [starEarnedEffect, setStarEarnedEffect] = useState(false);
   const [pendingStarEarned, setPendingStarEarned] = useState<number | null>(null);
   const [pendingGameComplete, setPendingGameComplete] = useState(false);
-  const [hoverTimer, setHoverTimer] = useState<NodeJS.Timeout | null>(null);
+  const [hoverTimer, setHoverTimer] = useState<number | null>(null);
   const [callbacksProcessed, setCallbacksProcessed] = useState<Set<number>>(new Set());
 
   // Reset game when gameKey changes

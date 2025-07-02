@@ -1,6 +1,5 @@
 import { Fruit, FruitCatchStarLevel } from './types';
 import { FRUIT_EMOJIS } from './constants';
-import { generateId, getRandomSize, getRandomPosition, calculateDistance } from '../../shared/gameUtils';
 import { GAME_BOUNDS } from '../../shared/constants';
 
 export const generateFruit = (level: FruitCatchStarLevel): Fruit => {
@@ -26,8 +25,7 @@ export const shouldSpawnFruit = (currentFruits: Fruit[], maxFruits: number): boo
 export const isFruitCaught = (
   fruit: Fruit,
   catcherPosition: { x: number; y: number },
-  catcherWidth: number,
-  catcherHeight: number
+  catcherWidth: number
 ): boolean => {
   const fruitBottom = fruit.position.y + fruit.size;
   const fruitCenter = fruit.position.x + fruit.size / 2;

@@ -70,7 +70,6 @@ interface BubblePopGameProps extends GameProps {}
 const BubblePopGame: React.FC<BubblePopGameProps> = ({ 
   onStarEarned, 
   onGameComplete, 
-  currentStars = 0,
   gameKey = 0
 }) => {
   const fonts = useFontClasses();

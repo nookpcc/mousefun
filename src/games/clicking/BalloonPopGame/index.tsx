@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameProps } from '../../../types';
 import { useFontClasses } from '../../../hooks/useFontClasses';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { Balloon, BalloonPopGameState } from './types';
+import { BalloonPopGameState } from './types';
 import { BALLOON_POP_STAR_LEVELS } from './constants';
-import { createBalloon, checkBalloonClick } from './utils';
+import { createBalloon } from './utils';
 
 interface BalloonPopGameProps extends GameProps {}
 

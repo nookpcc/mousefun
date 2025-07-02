@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameProps } from '../../../types';
 import { useFontClasses } from '../../../hooks/useFontClasses';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { Star, MouseTrailGameState } from './types';
+import { MouseTrailGameState } from './types';
 import { MOUSE_TRAIL_STAR_LEVELS, TRAIL_LENGTH } from './constants';
 import { generateAllStars, checkStarCollection, updateTrail } from './utils';
 
@@ -32,8 +32,6 @@ const MouseTrailGame: React.FC<MouseTrailGameProps> = ({
   });
   
   const [starEarnedEffect, setStarEarnedEffect] = useState(false);
-  const [pendingStarEarned, setPendingStarEarned] = useState<number | null>(null);
-  const [pendingGameComplete, setPendingGameComplete] = useState(false);
 
   // Reset game when gameKey changes
   useEffect(() => {
@@ -156,24 +154,20 @@ const MouseTrailGame: React.FC<MouseTrailGameProps> = ({
     });
   }, [gameState.gameStarted, gameState.starCompleted, gameState.gameCompleted, gameState.currentStar, onStarEarned, onGameComplete]);
 
-  const nextStar = () => {
-    if (gameState.currentStar < 5) {
-      const nextLevel = MOUSE_TRAIL_STAR_LEVELS[gameState.currentStar];
-      const stars = generateAllStars(nextLevel);
-      
-      setGameState(prev => ({
-        ...prev,
-        currentStar: prev.currentStar + 1,
-        stars,
-        starsCollected: 0,
-        starCompleted: false,
-        timeRemaining: nextLevel.timeLimit,
-        trail: []
-      }));
+  // Handle pending callbacks to avoid setState during render
+  useEffect(() => {
+    if (pendingStarEarned !== null) {
+      onStarEarned?.(pendingStarEarned);
+      setPendingStarEarned(null);
     }
-  };
+  }, [pendingStarEarned, onStarEarned]);
 
-  // Handle pending callbacks to avoid setState during render\n  useEffect(() => {\n    if (pendingStarEarned !== null) {\n      onStarEarned?.(pendingStarEarned);\n      setPendingStarEarned(null);\n    }\n  }, [pendingStarEarned, onStarEarned]);\n\n  useEffect(() => {\n    if (pendingGameComplete) {\n      onGameComplete?.(true);\n      setPendingGameComplete(false);\n    }\n  }, [pendingGameComplete, onGameComplete]);\n\n  // No timer for Mouse Trail Magic - removed countdown effect"
+  useEffect(() => {
+    if (pendingGameComplete) {
+      onGameComplete?.(true);
+      setPendingGameComplete(false);
+    }
+  }, [pendingGameComplete, onGameComplete]);
 
   if (!gameState.gameStarted) {
     return (

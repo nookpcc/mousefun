@@ -3,14 +3,10 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { 
   MouseTrailGame,
   HouseExplorerGame,
-  BubblePopGame,
-  ClickTargetGame,
   BalloonPopGame,
   ShapeSortGame,
   ActionClickerGame,
-  PuzzlePiecesGame,
   MazeRunnerGame,
-  FruitCatchGame,
   ScrollChallengeGame,
   AreaCoverGame,
 } from '../games';

@@ -69,7 +69,6 @@ interface MouseTrailGameProps extends GameProps {}
 const MouseTrailGame: React.FC<MouseTrailGameProps> = ({ 
   onStarEarned, 
   onGameComplete, 
-  currentStars = 0,
   gameKey = 0
 }) => {
   const fonts = useFontClasses();

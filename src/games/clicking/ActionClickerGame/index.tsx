@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameProps } from '../../../types';
 import { useFontClasses } from '../../../hooks/useFontClasses';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { Target, ActionClickerGameState, ClickType } from './types';
+import { ActionClickerGameState, ClickType } from './types';
 import { ACTION_CLICKER_STAR_LEVELS, MISS_PENALTY } from './constants';
 import { generateTarget, shouldSpawnTarget } from './utils';
 
@@ -58,8 +58,6 @@ const ActionClickerGame: React.FC<ActionClickerGameProps> = ({
   const getCurrentLevel = () => ACTION_CLICKER_STAR_LEVELS[gameState.currentStar - 1];
 
   const startGame = () => {
-    const level = getCurrentLevel();
-    
     setGameState(prev => ({
       ...prev,
       gameStarted: true,

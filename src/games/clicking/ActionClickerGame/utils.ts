@@ -23,7 +23,7 @@ export const shouldSpawnTarget = (currentTargets: Target[], maxTargets: number):
   return currentTargets.filter(t => t.isActive).length < maxTargets;
 };
 
-export const updateTargetLifetime = (target: Target, deltaTime: number): Target => {
+export const updateTargetLifetime = (target: Target): Target => {
   // For ActionClickerGame, targets don't have a lifetime that makes them disappear
   // They only disappear when hit or when a new level starts
   return target;

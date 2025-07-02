@@ -266,8 +266,8 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
             key={bubble.id}
             className={`absolute bubble ${bubble.color} border-2 border-white/50 shadow-lg cursor-pointer`}
             style={{
-              left: bubble.position.x,
-              top: bubble.position.y,
+              left: bubble.x + 'px',
+              top: bubble.y + 'px',
               width: bubble.size,
               height: bubble.size,
             }}

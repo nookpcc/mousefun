@@ -2,7 +2,7 @@ import { HouseRoom, HouseExplorerStarLevel } from './types';
 import { ROOM_COLORS } from './constants';
 
 export const initializeRooms = (level: HouseExplorerStarLevel): HouseRoom[] => {
-  return level.rooms.map((roomTemplate, index) => ({
+  return level.rooms.map((roomTemplate) => ({
     ...roomTemplate,
     discovered: false,
     hovered: false,

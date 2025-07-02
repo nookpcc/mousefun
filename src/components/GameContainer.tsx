@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GameData, GameProps } from '../types';
-import StarRating from './StarRating';
+import { GameData } from '../types';
 import GameNavigationBanner from './GameNavigationBanner';
 import { useGameStore } from '../store/gameStore';
 import { useFontClasses } from '../hooks/useFontClasses';
@@ -17,7 +16,6 @@ interface GameContainerProps {
 
 const GameContainer: React.FC<GameContainerProps> = ({ games, currentGameIndex, gameKey, onSelectGame, onNextGame, onPrevGame }) => {
   const { gameProgress, updateGameProgress } = useGameStore();
-  const fonts = useFontClasses();
 
   // Listen for nextGame event from games
   React.useEffect(() => {

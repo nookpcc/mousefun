@@ -1,4 +1,4 @@
-import { GameEntity, StarLevel } from '../../shared/types';
+import { StarLevel } from '../../shared/types';
 
 export type MazeTileType = 'wall' | 'path' | 'start' | 'end';
 

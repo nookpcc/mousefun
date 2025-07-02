@@ -1,4 +1,4 @@
-import { Shape, Target, ShapeType, ShapeSortStarLevel } from './types';
+import { Shape, Target } from './types';
 import { GAME_AREA, SHAPE_COLORS } from './constants';
 
 export const generateId = (): string => {

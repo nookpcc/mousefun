@@ -9,7 +9,7 @@ interface GameStore {
   
   // Actions
   startGame: (gameId: string) => void;
-  endGame: (completed: boolean, score?: number, starsEarned?: number) => void;
+  endGame: (gameId: string) => void;
   updateGameProgress: (gameId: string, stars: number) => void;
   addToFavorites: (gameId: string) => void;
   removeFromFavorites: (gameId: string) => void;

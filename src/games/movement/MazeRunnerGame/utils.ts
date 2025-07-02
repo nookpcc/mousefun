@@ -1,6 +1,5 @@
 import { Maze, MazeTile, MazeRunnerStarLevel, Player } from './types';
 import { PLAYER_SIZE } from './constants';
-import { GAME_BOUNDS } from '../../shared/constants';
 
 export const createMaze = (level: MazeRunnerStarLevel): Maze => {
   const tiles: MazeTile[][] = [];

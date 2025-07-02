@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameProps } from '../../../types';
 import { useFontClasses } from '../../../hooks/useFontClasses';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { ScrollChallengeGameState, TargetZone } from './types';
+import { ScrollChallengeGameState } from './types';
 import { SCROLL_CHALLENGE_STAR_LEVELS, TRACK_WIDTH, SLIDER_SIZE } from './constants';
 import { generateTargetZone, checkAlignment } from './utils';
 

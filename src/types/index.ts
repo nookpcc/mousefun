@@ -1,20 +1,20 @@
+export type GameCategory = 'movement' | 'clicking' | 'dragging' | 'pointing' | 'scrolling';
+
 export interface GameData {
   id: string;
   title: string;
   description: string;
   difficulty: 'easy' | 'medium' | 'hard';
-  category: 'movement' | 'clicking' | 'dragging';
+  category: GameCategory;
   thumbnail: string;
-  rating: number;
-  playCount: number;
-  stars: number; // 0-5 ดาว
-  component: React.ComponentType<GameProps>;
   backgroundColor: string;
+  component: React.ComponentType<GameProps>;
 }
 
 export interface GameProps {
   onStarEarned?: (currentStarsCount: number) => void;
   onGameComplete?: (gameCompleted: boolean) => void;
+  onGameEnd?: (score: number) => void;
   currentStars?: number;
   gameKey?: number;
 }

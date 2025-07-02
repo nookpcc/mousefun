@@ -1,5 +1,5 @@
 import { TargetZone, ScrollChallengeLevel } from './types';
-import { TRACK_WIDTH, SLIDER_SIZE } from './constants';
+import { SLIDER_SIZE } from './constants';
 
 export const generateTargetZone = (level: ScrollChallengeLevel): TargetZone => {
   const position = Math.floor(Math.random() * (level.maxTargetPosition - level.minTargetPosition + 1)) + level.minTargetPosition;

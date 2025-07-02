@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { GameProps } from '../../../types';
 import { useFontClasses } from '../../../hooks/useFontClasses';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { MazeRunnerGameState, MazeTileType } from './types';
 import { MAZE_RUNNER_STAR_LEVELS, PLAYER_SIZE } from './constants';
 import { createMaze, initializePlayer, isCollidingWithWall, hasReachedEnd } from './utils';
-import { GAME_BOUNDS } from '../../shared/constants';
 
 interface MazeRunnerGameProps extends GameProps {}
 

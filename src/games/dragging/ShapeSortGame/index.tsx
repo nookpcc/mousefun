@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameProps } from '../../../types';
 import { useFontClasses } from '../../../hooks/useFontClasses';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { Shape, Target, ShapeSortGameState, ShapeType } from './types';
+import { Shape, ShapeSortGameState, ShapeType } from './types';
 import { SHAPE_SORT_STAR_LEVELS, TARGET_COLORS, SHAPE_COLORS } from './constants';
 import { createShapesForLevel, createTargetsForLevel, isOverTarget } from './utils';
 

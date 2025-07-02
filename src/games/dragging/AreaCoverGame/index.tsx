@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameProps } from '../../../types';
 import { useFontClasses } from '../../../hooks/useFontClasses';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { AreaCoverGameState, TargetArea } from './types';
+import { AreaCoverGameState } from './types';
 import { AREA_COVER_STAR_LEVELS, GAME_AREA_WIDTH, GAME_AREA_HEIGHT } from './constants';
 import { generateTargetArea, calculateCoverage } from './utils';
 
