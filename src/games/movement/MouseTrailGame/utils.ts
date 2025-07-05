@@ -1,5 +1,5 @@
 import { Star, MouseTrailStarLevel } from './types';
-import { STAR_COLORS, COLLECTION_DISTANCE } from './constants';
+import { COLLECTION_DISTANCE } from './constants';
 import { generateId, getRandomPosition, getRandomSize, calculateDistance } from '../../shared/gameUtils';
 import { GamePosition } from '../../shared/types';
 
@@ -15,10 +15,8 @@ export const generateStar = (level: MouseTrailStarLevel): Star => {
       bottom: 400 - size / 2 - 20
     }),
     size,
-    color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
     collected: false,
-    glowIntensity: Math.random() * 0.5 + 0.5,
-    isActive: true
+    glowIntensity: Math.random() * 0.5 + 0.5
   };
 };
 

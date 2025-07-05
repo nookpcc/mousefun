@@ -17,14 +17,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
     }
   };
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'movement': return '🏃‍♂️';
-      case 'clicking': return '👆';
-      case 'dragging': return '✋';
-      default: return '🎮';
-    }
-  };
+
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -64,10 +57,10 @@ const GameCard: React.FC<GameCardProps> = ({ game, onClick }) => {
         {/* Rating and Play Count */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-1">
-            {renderStars(game.rating)}
+            {renderStars(game.rating || 5)}
           </div>
           <div className="text-xs text-gray-500 font-body">
-            ▶️ {game.playCount.toLocaleString()}
+            ▶️ {(game.playCount || 0).toLocaleString()}
           </div>
         </div>
 

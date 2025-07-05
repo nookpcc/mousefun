@@ -41,7 +41,7 @@ export const useGameStore = create<GameStore>()(persist(
       });
     },
 
-    endGame: (completed: boolean, score?: number, starsEarned?: number) => {
+    endGame: (gameId: string) => {
       const session = get().currentSession;
       if (!session) return;
 

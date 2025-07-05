@@ -1,6 +1,10 @@
-import { GameEntity, StarLevel } from '../../shared/types';
+import { StarLevel, GamePosition } from '../../shared/types';
 
-export interface Bubble extends GameEntity {
+export interface Bubble {
+  id: string;
+  x: number;
+  y: number;
+  position: GamePosition;
   size: number;
   speed: number;
 }

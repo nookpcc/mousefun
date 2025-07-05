@@ -113,9 +113,10 @@ const StarRating: React.FC<StarRatingProps> = ({
                     opacity: [0, 0.6, 0]
                   }}
                   transition={showAnimation && index === stars - 1 ? {
-                scale: [1, 1.5, 1],
-                rotate: [0, 360]
-              } : undefined}
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  } : undefined}
                 >
                   <div className={`${sizeClasses[size]} text-yellow-200`}>⭐</div>
                 </motion.div>

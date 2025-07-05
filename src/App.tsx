@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import GameContainer from './components/GameContainer';
 import LanguageSwitcher from './components/LanguageSwitcher';

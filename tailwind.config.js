@@ -54,7 +54,10 @@ export default {
         // Japanese fonts
         'heading-ja': ['M PLUS Rounded 1c', 'sans-serif'],
         'body-ja': ['M PLUS Rounded 1c', 'sans-serif'],
-        // General fallbacks
+        // Custom names
+        'sriracha': ['Sriracha', 'cursive'],
+        'fredoka': ['Fredoka One', 'cursive'],
+        'nunito': ['Nunito', 'sans-serif'],
         'heading': ['Sriracha', 'Fredoka One', 'M PLUS Rounded 1c', 'cursive'],
         'body': ['Sriracha', 'Nunito', 'M PLUS Rounded 1c', 'sans-serif'],
         // Keep old names for backwards compatibility

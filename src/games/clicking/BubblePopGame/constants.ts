@@ -3,58 +3,47 @@ import { BubbleStarLevel } from './types';
 export const BUBBLE_STAR_LEVELS: BubbleStarLevel[] = [
   {
     star: 1,
-    target: 3,
+    target: 5,
     bubbleCount: 3,
-    bubbleSpeed: 0.5,
-    bubbleSize: { min: 50, max: 70 },
+    bubbleSpeed: 2,
+    bubbleSize: { min: 60, max: 80 },
     spawnRate: 2000,
-    description: 'ฟองใหญ่ ช้าๆ ง่ายมาก'
+    description: 'จับฟองสบู่ 5 ฟอง'
   },
   {
     star: 2,
-    target: 5,
-    bubbleCount: 5,
-    bubbleSpeed: 1,
-    bubbleSize: { min: 40, max: 60 },
+    target: 10,
+    bubbleCount: 4,
+    bubbleSpeed: 3,
+    bubbleSize: { min: 50, max: 70 },
     spawnRate: 1800,
-    description: 'ฟองปานกลาง เร็วขึ้นหน่อย'
+    description: 'จับฟองสบู่ 10 ฟอง'
   },
   {
     star: 3,
-    target: 7,
-    bubbleCount: 7,
-    bubbleSpeed: 1.5,
-    bubbleSize: { min: 35, max: 55 },
+    target: 15,
+    bubbleCount: 5,
+    bubbleSpeed: 4,
+    bubbleSize: { min: 40, max: 60 },
     spawnRate: 1500,
-    description: 'ฟองเล็กลง เร็วขึ้น'
+    description: 'จับฟองสบู่ 15 ฟอง'
   },
   {
     star: 4,
-    target: 10,
-    bubbleCount: 10,
-    bubbleSpeed: 2,
-    bubbleSize: { min: 30, max: 50 },
+    target: 20,
+    bubbleCount: 6,
+    bubbleSpeed: 5,
+    bubbleSize: { min: 35, max: 55 },
     spawnRate: 1200,
-    description: 'ฟองเล็ก เร็วมาก'
+    description: 'จับฟองสบู่ 20 ฟอง'
   },
   {
     star: 5,
-    target: 12,
-    bubbleCount: 12,
-    bubbleSpeed: 2.5,
-    bubbleSize: { min: 25, max: 45 },
+    target: 25,
+    bubbleCount: 7,
+    bubbleSpeed: 6,
+    bubbleSize: { min: 30, max: 50 },
     spawnRate: 1000,
-    description: 'ฟองจิ๋ว เร็วสุดๆ!'
+    description: 'จับฟองสบู่ 25 ฟอง'
   }
 ];
-
-export const BUBBLE_COLORS = [
-  'bg-red-300', 
-  'bg-blue-300', 
-  'bg-green-300', 
-  'bg-yellow-300', 
-  'bg-purple-300', 
-  'bg-pink-300'
-];
-
-export const BUBBLE_CLEANUP_TIME = 8000; // 8 seconds

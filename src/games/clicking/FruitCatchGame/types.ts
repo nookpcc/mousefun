@@ -1,21 +1,24 @@
-import { GameEntity, StarLevel } from '../../shared/types';
+import { StarLevel, GamePosition } from '../../shared/types';
 
-export interface Fruit extends GameEntity {
+export interface Fruit {
+  id: string;
+  position: GamePosition;
   size: number;
   speed: number;
-  type: string; // e.g., 'apple', 'banana'
+  type: number;
+  isCaught: boolean;
 }
 
 export interface FruitCatchStarLevel extends StarLevel {
-  fruitCount: number; // Max fruits on screen
-  fruitSpeed: number; // Base falling speed
+  fruitCount: number;
+  fruitSpeed: number;
   fruitSize: { min: number; max: number };
-  spawnRate: number; // How often fruits spawn (ms)
+  spawnRate: number;
 }
 
 export interface FruitCatchGameState {
   fruits: Fruit[];
-  catcherPosition: { x: number; y: number };
+  catcherPosition: GamePosition;
   currentStar: number;
   fruitsCaught: number;
   gameStarted: boolean;

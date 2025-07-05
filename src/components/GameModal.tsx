@@ -69,7 +69,7 @@ const GameModal: React.FC<GameModalProps> = ({ game, isOpen, onClose, onGameEnd 
                   {game.difficulty === 'easy' ? 'ง่าย' : 
                    game.difficulty === 'medium' ? 'ปานกลาง' : 'ยาก'}
                 </span>
-                <span>เล่น {game.playCount.toLocaleString()} ครั้ง</span>
+                <span>เล่น {(game.playCount || 0).toLocaleString()} ครั้ง</span>
               </div>
               <motion.button
                 className="text-gray-500 hover:text-gray-700 font-body text-sm"

@@ -19,7 +19,6 @@ interface BubblePopGameProps extends GameProps {}
 const BubblePopGame: React.FC<BubblePopGameProps> = ({ 
   onStarEarned, 
   onGameComplete, 
-  currentStars = 0,
   gameKey = 0
 }) => {
   const fonts = useFontClasses();
@@ -37,52 +36,12 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
 
   const [pops, setPops] = useState<PopEffect[]>([]);
 
-  // Animation state
-  const [isAnimatingStar, setIsAnimatingStar] = useState(false);
-  const [starPositions, setStarPositions] = useState({ from: { x: 0, y: 0 }, to: { x: 0, y: 0 } });
-  const modalRef = useRef<HTMLDivElement>(null);
-  const starRefs = useRef<(HTMLSpanElement | null)[]>([]);
-
   // Reset game when gameKey changes
   useEffect(() => {
     if (gameKey > 0) {
       resetGame();
     }
   }, [gameKey]);
-
-  // Effect to trigger star animation
-  useEffect(() => {
-    if (gameState.starCompleted && !isAnimatingStar) {
-      console.log('[Animation Debug] Effect triggered. starCompleted:', gameState.starCompleted);
-
-      const modalRect = modalRef.current?.getBoundingClientRect();
-      const targetStarIndex = gameState.earnedStars - 1;
-      const starRect = starRefs.current[targetStarIndex]?.getBoundingClientRect();
-
-      console.log('[Animation Debug] modalRef.current:', modalRef.current);
-      console.log('[Animation Debug] modalRect:', modalRect);
-      console.log('[Animation Debug] targetStarIndex:', targetStarIndex);
-      console.log('[Animation Debug] starRefs.current[targetStarIndex]:', starRefs.current[targetStarIndex]);
-      console.log('[Animation Debug] starRect:', starRect);
-
-      if (modalRect && starRect) {
-        console.log('[Animation Debug] Both rects found. Calculating positions.');
-        const fromPos = {
-          x: modalRect.width / 2 - 30, // Center of modal (approx)
-          y: modalRect.height / 2 - 60, // Center of modal (approx)
-        };
-        const toPos = {
-          x: starRect.left - modalRect.left,
-          y: starRect.top - modalRect.top,
-        };
-        console.log('[Animation Debug] Positions calculated:', { from: fromPos, to: toPos });
-        setStarPositions({ from: fromPos, to: toPos });
-        setIsAnimatingStar(true);
-      } else {
-        console.error('[Animation Debug] Failed to get modalRect or starRect.');
-      }
-    }
-  }, [gameState.starCompleted, gameState.earnedStars, isAnimatingStar]);
 
   const resetGame = () => {
     setGameState({
@@ -94,7 +53,6 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
       gameCompleted: false,
       earnedStars: 0,
     });
-    setIsAnimatingStar(false);
     setPops([]);
   };
 
@@ -118,8 +76,8 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
     if (bubble) {
       const newPop: PopEffect = {
         id: bubble.id,
-        x: bubble.position.x,
-        y: bubble.position.y,
+        x: bubble.position.x.toString(),
+        y: bubble.position.y.toString(),
         size: bubble.size,
       };
       setPops(currentPops => [...currentPops, newPop]);
@@ -141,7 +99,7 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
           ...updates,
           starCompleted: true,
           earnedStars: newStarCount,
-          bubbles: [] // Clear remaining bubbles
+          bubbles: []
         };
         
         onStarEarned?.(newStarCount);
@@ -154,18 +112,6 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
       
       return { ...prev, ...updates };
     });
-  };
-
-  const nextStar = () => {
-    if (gameState.currentStar < 5) {
-      setGameState(prev => ({
-        ...prev,
-        currentStar: prev.currentStar + 1,
-        bubblesPopped: 0,
-        starCompleted: false,
-        bubbles: []
-      }));
-    }
   };
 
   // Bubble spawning system
@@ -187,21 +133,6 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
 
     return () => clearInterval(bubbleInterval);
   }, [gameState.gameStarted, gameState.starCompleted, gameState.gameCompleted, gameState.currentStar, generateBubbleForCurrentLevel]);
-
-  // Bubble cleanup (remove old bubbles)
-  useEffect(() => {
-    const cleanup = setInterval(() => {
-      setGameState(prev => {
-        const now = Date.now();
-        const activeBubbles = prev.bubbles.filter(bubble => {
-          return now - parseInt(bubble.id, 36) < 8000; // Remove after 8 seconds
-        });
-        return { ...prev, bubbles: activeBubbles };
-      });
-    }, 1000);
-
-    return () => clearInterval(cleanup);
-  }, []);
 
   if (!gameState.gameStarted) {
     return (
@@ -264,10 +195,10 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
         {gameState.bubbles.map((bubble) => (
           <motion.div
             key={bubble.id}
-            className={`absolute bubble ${bubble.color} border-2 border-white/50 shadow-lg cursor-pointer`}
+            className="absolute rounded-full border-2 border-white/50 shadow-lg cursor-pointer bg-gradient-to-br from-blue-400 to-purple-500"
             style={{
-              left: bubble.x + 'px',
-              top: bubble.y + 'px',
+              left: bubble.position.x + 'px',
+              top: bubble.position.y + 'px',
               width: bubble.size,
               height: bubble.size,
             }}
@@ -279,88 +210,47 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
             }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{ 
-              duration: 0.3,
-              y: { repeat: Infinity, duration: 2 / bubble.speed }
+              duration: 0.5,
+              y: { repeat: Infinity, duration: 2 }
             }}
             onClick={() => popBubble(bubble.id)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-          >
-            <div className="w-full h-full rounded-full bg-gradient-to-tr from-white/30 to-transparent" />
-          </motion.div>
+          />
         ))}
       </AnimatePresence>
 
-      {/* Star Completed Modal */}
+      {/* Star Completed */}
       {gameState.starCompleted && !gameState.gameCompleted && (
         <motion.div
-          className="absolute inset-0 bg-black/50 flex items-center justify-center z-20"
+          className="absolute inset-0 flex items-center justify-center bg-black/50 z-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           <motion.div
-            ref={modalRef}
-            className="bg-white rounded-2xl p-8 text-center max-w-sm mx-4 relative"
+            className="bg-white rounded-2xl p-8 text-center"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.2 }}
           >
-            {isAnimatingStar && (
-              <motion.span
-                className="absolute text-6xl"
-                initial={{ x: starPositions.from.x, y: starPositions.from.y, scale: 1.5 }}
-                animate={{ x: starPositions.to.x, y: starPositions.to.y, scale: 0.3 }}
-                transition={{ duration: 0.8, ease: 'easeInOut' }}
-                onAnimationComplete={() => setIsAnimatingStar(false)}
-              >
-                ⭐
-              </motion.span>
-            )}
-
-            {!isAnimatingStar && (
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className="text-6xl mb-4"
-              >
-                ⭐
-              </motion.div>
-            )}
-            
-            <h3 className={`text-2xl ${fonts.kid} text-gray-800 mb-2`}>ได้ดาวแล้ว!</h3>
-            <p className={`text-gray-600 mb-4 ${fonts.body}`}>
-              ดาวที่ {gameState.currentStar} เสร็จแล้ว! 🎉
-            </p>
-            
-            <div className="flex justify-center mb-4">
-              {Array.from({ length: 5 }, (_, index) => (
-                <span 
-                  key={index}
-                  ref={(el) => (starRefs.current[index] = el)}
-                  className={`text-3xl mx-1 transition-opacity duration-300 ${
-                    index < gameState.earnedStars ? 'text-yellow-400' : 'text-gray-300'
-                  }`}
-                  style={{
-                    opacity: isAnimatingStar && index === gameState.earnedStars - 1 ? 0 : 1,
-                  }}
-                >
-                  {index < gameState.earnedStars ? '⭐' : '☆'}
-                </span>
-              ))}
-            </div>
-
-            {gameState.currentStar < 5 ? (
+            <div className="text-6xl mb-4">⭐</div>
+            <h3 className={`text-2xl ${fonts.kid} text-gray-800 mb-4`}>
+              {t('starEarned')} {gameState.currentStar}!
+            </h3>
+            {gameState.currentStar < 5 && (
               <button
-                className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
-                onClick={nextStar}
-                disabled={isAnimatingStar}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full"
+                onClick={() => {
+                  setGameState(prev => ({
+                    ...prev,
+                    currentStar: prev.currentStar + 1,
+                    bubblesPopped: 0,
+                    starCompleted: false,
+                    bubbles: []
+                  }));
+                }}
               >
-                ➡️ ดาวถัดไป
+                ➡️ {t('nextLevel')}
               </button>
-            ) : (
-              <p className={`text-green-600 font-bold ${fonts.body}`}>
-                🏆 ผ่านเกมแล้ว!
-              </p>
             )}
           </motion.div>
         </motion.div>
@@ -369,42 +259,40 @@ const BubblePopGame: React.FC<BubblePopGameProps> = ({
       {/* Game Completed */}
       {gameState.gameCompleted && (
         <motion.div
-          className="absolute inset-0 bg-black/50 flex items-center justify-center z-20"
+          className="absolute inset-0 flex items-center justify-center bg-black/50 z-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           <motion.div
-            className="bg-white rounded-2xl p-8 text-center max-w-sm mx-4"
+            className="bg-white rounded-2xl p-8 text-center"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ delay: 0.2 }}
           >
             <div className="text-6xl mb-4">🏆</div>
-            <h3 className={`text-3xl ${fonts.kid} text-gray-800 mb-2`}>ยอดเยี่ยม!</h3>
-            <p className={`text-gray-600 mb-4 ${fonts.body}`}>
-              คุณผ่านเกมจับฟองสบู่แล้ว! 🎉
-            </p>
-            
-            {/* Full Stars */}
-            <div className="flex justify-center mb-6">
+            <h3 className={`text-3xl ${fonts.kid} text-gray-800 mb-4`}>
+              {t('gameComplete')}!
+            </h3>
+            <div className="flex justify-center mb-4">
               {Array.from({ length: 5 }, (_, index) => (
-                <motion.span 
-                  key={index}
-                  className="text-4xl mx-1 text-yellow-400"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                >
+                <span key={index} className="text-4xl mx-1 text-yellow-400">
                   ⭐
-                </motion.span>
+                </span>
               ))}
             </div>
-            
-            <button
-              className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
-              onClick={resetGame}
-            >
-              🔄 {t('playAgain')}
-            </button>
+            <div className="flex gap-4">
+              <button
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full"
+                onClick={resetGame}
+              >
+                🔄 {t('playAgain')}
+              </button>
+              <button
+                className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full"
+                onClick={() => onGameComplete?.(true)}
+              >
+                ➡️ {t('nextGame')}
+              </button>
+            </div>
           </motion.div>
         </motion.div>
       )}

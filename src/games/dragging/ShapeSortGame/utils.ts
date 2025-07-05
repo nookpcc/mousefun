@@ -1,62 +1,65 @@
-import { Shape, Target } from './types';
-import { GAME_AREA, SHAPE_COLORS } from './constants';
+import { Shape, Target, ShapeType, ShapeSortStarLevel } from './types';
+import { GamePosition } from '../../shared/types';
 
 export const generateId = (): string => {
   return Math.random().toString(36).substr(2, 9);
 };
 
-export const createShapesForLevel = (level: ShapeSortStarLevel): Shape[] => {
-  const shapes: Shape[] = [];
-  const shapeSize = 60;
-  const availableWidth = GAME_AREA.width - shapeSize;
-  const gap = availableWidth / (level.targetCount - 1);
-
-  for (let i = 0; i < level.targetCount; i++) {
-    const shapeType = level.shapes[Math.floor(Math.random() * level.shapes.length)];
-    shapes.push({
-      id: generateId(),
-      type: shapeType,
-      color: SHAPE_COLORS[shapeType],
-      initialPosition: {
-        x: i * gap,
-        y: 20, // Start near the top
-      },
-      isSorted: false,
-    });
-  }
-  return shapes;
+const SHAPE_COLORS = {
+  circle: '#ff6b6b',
+  square: '#4ecdc4',
+  triangle: '#45b7d1',
+  star: '#feca57'
 };
 
-export const createTargetsForLevel = (level: ShapeSortStarLevel): Target[] => {
-  const targets: Target[] = [];
-  const targetWidth = 100;
-  const targetHeight = 100;
-  const availableWidth = GAME_AREA.width - (level.shapes.length * targetWidth);
-  const gap = availableWidth / (level.shapes.length + 1);
+const SHAPE_COLORS: Record<ShapeType, string> = {
+  circle: '#ff6b6b',
+  square: '#4ecdc4',
+  triangle: '#45b7d1',
+  star: '#feca57'
+};
 
-  level.shapes.forEach((shapeType, index) => {
-    targets.push({
+export const createShape = (type: ShapeType, bounds: any): Shape => {
+  return {
+    id: generateId(),
+    type,
+    color: SHAPE_COLORS[type],
+    position: {
+      x: Math.random() * (bounds.width - 60),
+      y: Math.random() * (bounds.height - 60)
+    },
+    size: 60,
+    isDragging: false,
+    isPlaced: false
+  };
+};
+
+export const createTargets = (shapeTypes: ShapeType[], bounds: any): Target[] => {
+  return shapeTypes.map((shapeType: ShapeType, index: number) => {
+    const targetSize = 80;
+    const spacing = bounds.width / (shapeTypes.length + 1);
+    
+    return {
       id: generateId(),
       type: shapeType,
       position: {
-        x: gap * (index + 1) + index * targetWidth,
-        y: GAME_AREA.height - targetHeight - 20, // Position at the bottom
+        x: spacing * (index + 1) - targetSize / 2,
+        y: bounds.height - targetSize - 20
       },
-      size: { width: targetWidth, height: targetHeight },
-    });
+      size: targetSize,
+      isOccupied: false
+    };
   });
-
-  return targets;
 };
 
 export const isOverTarget = (
-  shapeRect: DOMRect,
-  targetRect: DOMRect
+  shapePosition: GamePosition,
+  targetPosition: GamePosition,
+  tolerance: number = 40
 ): boolean => {
-  return !(
-    shapeRect.right < targetRect.left ||
-    shapeRect.left > targetRect.right ||
-    shapeRect.bottom < targetRect.top ||
-    shapeRect.top > targetRect.bottom
+  const distance = Math.sqrt(
+    Math.pow(shapePosition.x - targetPosition.x, 2) + 
+    Math.pow(shapePosition.y - targetPosition.y, 2)
   );
+  return distance < tolerance;
 };

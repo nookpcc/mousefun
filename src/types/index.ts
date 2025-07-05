@@ -9,6 +9,9 @@ export interface GameData {
   thumbnail: string;
   backgroundColor: string;
   component: React.ComponentType<GameProps>;
+  rating?: number;
+  playCount?: number;
+  stars?: number;
 }
 
 export interface GameProps {

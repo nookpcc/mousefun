@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameData } from '../types';
 import GameNavigationBanner from './GameNavigationBanner';
 import { useGameStore } from '../store/gameStore';
-import { useFontClasses } from '../hooks/useFontClasses';
+
 
 interface GameContainerProps {
   games: GameData[];

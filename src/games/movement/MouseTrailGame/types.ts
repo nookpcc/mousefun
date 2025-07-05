@@ -1,6 +1,9 @@
-import { StarLevel } from '../../shared/types';
+import { StarLevel, GamePosition } from '../../shared/types';
 
-export interface Star extends GameEntity {
+export interface Star {
+  id: string;
+  position: GamePosition;
+  size: number;
   collected: boolean;
   glowIntensity: number;
 }

@@ -80,7 +80,7 @@ const ClickTargetGame: React.FC<ClickTargetGameProps> = ({
   const [starCompleted, setStarCompleted] = useState(false);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [earnedStars, setEarnedStars] = useState(0);
-  const [targetTimeout, setTargetTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [targetTimeout, setTargetTimeout] = useState<number | null>(null);
 
   // Reset game when gameKey changes
   useEffect(() => {

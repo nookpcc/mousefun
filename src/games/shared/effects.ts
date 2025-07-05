@@ -1,101 +1,58 @@
 import { GamePosition, ParticleEffect } from './types';
-import { generateId } from './gameUtils';
-import { COLORS } from './constants';
 
-// Particle effect utilities
 export const createParticleEffect = (
   position: GamePosition,
-  count: number = 6,
-  colors: readonly string[] = COLORS.PRIMARY
+  color: string = '#FFD700',
+  count: number = 8
 ): ParticleEffect[] => {
-  return Array.from({ length: count }, (_, i) => ({
-    id: generateId(),
-    position: { ...position },
-    velocity: {
-      x: Math.cos(i * 60 * Math.PI / 180) * (Math.random() * 50 + 25),
-      y: Math.sin(i * 60 * Math.PI / 180) * (Math.random() * 50 + 25)
-    },
-    life: 0,
-    maxLife: Math.random() * 0.5 + 0.5, // 0.5-1 seconds
-    color: colors[Math.floor(Math.random() * colors.length)],
-    size: Math.random() * 4 + 2
-  }));
+  const particles: ParticleEffect[] = [];
+  
+  for (let i = 0; i < count; i++) {
+    const angle = (i / count) * Math.PI * 2;
+    const velocity = {
+      x: Math.cos(angle) * (Math.random() * 100 + 50),
+      y: Math.sin(angle) * (Math.random() * 100 + 50)
+    };
+    
+    particles.push({
+      id: Math.random().toString(36),
+      position: { ...position },
+      velocity,
+      life: 1,
+      maxLife: 1,
+      color,
+      size: Math.random() * 8 + 4
+    });
+  }
+  
+  return particles;
 };
 
-// Star animation variants
-export const starAnimations = {
-  earn: {
-    scale: [1, 1.5, 1],
-    rotate: [0, 360],
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
-  },
-  burst: {
-    scale: [0, 2, 3],
-    opacity: [0, 1, 0],
-    transition: {
-      duration: 0.8,
-      ease: "easeOut"
-    }
-  },
-  sparkle: {
-    scale: [0, 1, 0],
-    opacity: [1, 1, 0],
-    transition: {
-      duration: 1,
-      ease: "easeOut"
-    }
-  }
+export const updateParticles = (particles: ParticleEffect[], deltaTime: number = 16): ParticleEffect[] => {
+  return particles
+    .map(particle => ({
+      ...particle,
+      position: {
+        x: particle.position.x + particle.velocity.x * deltaTime / 1000,
+        y: particle.position.y + particle.velocity.y * deltaTime / 1000
+      },
+      life: particle.life - deltaTime / 1000,
+      velocity: {
+        x: particle.velocity.x * 0.98, // Friction
+        y: particle.velocity.y * 0.98 + 100 * deltaTime / 1000 // Gravity
+      }
+    }))
+    .filter(particle => particle.life > 0);
 };
 
-// Game completion animations
-export const gameCompleteAnimations = {
-  container: {
-    initial: { opacity: 0, scale: 0 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0 },
-    transition: { duration: 0.3 }
-  },
-  stars: {
-    initial: { scale: 0, rotate: -180 },
-    animate: { scale: 1, rotate: 0 },
-    transition: { 
-      type: "spring",
-      stiffness: 200,
-      delay: 0.2
-    }
-  },
-  button: {
-    whileHover: { scale: 1.05 },
-    whileTap: { scale: 0.95 },
-    transition: { duration: 0.2 }
-  }
+export const createStarBurst = (position: GamePosition): ParticleEffect[] => {
+  return createParticleEffect(position, '#FFD700', 12);
 };
 
-// Entity spawn animations
-export const entityAnimations = {
-  spawn: {
-    scale: [0, 1.2, 1],
-    opacity: [0, 1],
-    transition: { duration: 0.3 }
-  },
-  despawn: {
-    scale: 0,
-    opacity: 0,
-    transition: { duration: 0.2 }
-  },
-  float: {
-    y: [0, -10, 0],
-    transition: {
-      repeat: Infinity,
-      duration: 2,
-      ease: "easeInOut"
-    }
-  },
-  bounce: {
-    scale: [1, 1.1, 1],
-    transition: { duration: 0.2 }
-  }
+export const createPopEffect = (position: GamePosition): ParticleEffect[] => {
+  return createParticleEffect(position, '#87CEEB', 6);
+};
+
+export const createCollectionEffect = (position: GamePosition): ParticleEffect[] => {
+  return createParticleEffect(position, '#98FB98', 10);
 };
