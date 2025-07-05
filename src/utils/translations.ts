@@ -61,6 +61,8 @@ export const translations = {
     scrollChallengeDescription: 'เลื่อนเมาส์เพื่อจับคู่ตัวเลขเป้าหมาย! ฝึกการควบคุมการเลื่อนของคุณ',
     areaCoverTitle: 'คลุมพื้นที่',
     areaCoverDescription: 'ลากเมาส์เพื่อสร้างกล่องเลือกและคลุมพื้นที่เป้าหมายให้ได้มากที่สุด!',
+    mouseSkillsGauntletTitle: '🏆✨',
+    mouseSkillsGauntletDescription: '🧠💪👁️👂🖐️',
     
     // UI Elements
     startGame: 'เริ่มเล่น',
@@ -141,6 +143,8 @@ export const translations = {
     scrollChallengeDescription: 'Scroll your mouse to match the target numbers! Practice your scrolling control.',
     areaCoverTitle: 'Area Cover',
     areaCoverDescription: 'Drag your mouse to create a selection box and cover the target areas as much as possible!',
+    mouseSkillsGauntletTitle: '🏆✨',
+    mouseSkillsGauntletDescription: '🧠💪👁️👂🖐️',
     
     // UI Elements
     startGame: 'Start Game',
@@ -221,6 +225,8 @@ export const translations = {
     scrollChallengeDescription: 'ターゲットの数字に合わせるためにマウスをスクロールしてください！スクロールコントロールを練習します。',
     areaCoverTitle: 'エリアカバー',
     areaCoverDescription: 'マウスをドラッグして選択ボックスを作成し、ターゲットエリアをできるだけ多くカバーしてください！',
+    mouseSkillsGauntletTitle: '🏆✨',
+    mouseSkillsGauntletDescription: '🧠💪👁️👂🖐️',
     
     // UI Elements
     startGame: 'ゲーム開始',

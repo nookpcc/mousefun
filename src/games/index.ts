@@ -2,14 +2,12 @@
 
 // Movement games  
 export { default as MouseTrailGame } from './movement/MouseTrailGame';
-export { default as MazeRunnerGame } from './movement/MazeRunnerGame';
 
 // Pointing games
 export { default as HouseExplorerGame } from './pointing/HouseExplorerGame';
 
 // Clicking games
 export { default as BubblePopGame } from './clicking/BubblePopGame';
-
 export { default as FruitCatchGame } from './clicking/FruitCatchGame';
 export { default as BalloonPopGame } from './clicking/BalloonPopGame';
 
@@ -20,7 +18,6 @@ export { default as ScrollChallengeGame } from './scrolling/ScrollChallengeGame'
 export { default as ActionClickerGame } from './clicking/ActionClickerGame';
 export { default as ShapeSortGame } from './dragging/ShapeSortGame';
 export { default as AreaCoverGame } from './dragging/AreaCoverGame';
-
 
 // Shared utilities
 export * from './shared/types';

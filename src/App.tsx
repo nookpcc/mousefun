@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import GameContainer from './components/GameContainer';
 import LanguageSwitcher from './components/LanguageSwitcher';
@@ -12,7 +12,6 @@ function App() {
   const gameData = useGameData();
   const fonts = useFontClasses();
   
-  // Add state for game selection
   const [currentGameIndex, setCurrentGameIndex] = useState(0);
   const [gameKey, setGameKey] = useState(0);
 
@@ -21,15 +20,15 @@ function App() {
     setGameKey(prev => prev + 1);
   };
 
-  const handleNextGame = () => {
+  const handleNextGame = useCallback(() => {
     setCurrentGameIndex((prev) => (prev + 1) % gameData.length);
     setGameKey(prev => prev + 1);
-  };
+  }, [gameData.length]);
 
-  const handlePrevGame = () => {
+  const handlePrevGame = useCallback(() => {
     setCurrentGameIndex((prev) => (prev - 1 + gameData.length) % gameData.length);
     setGameKey(prev => prev + 1);
-  };
+  }, [gameData.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50">

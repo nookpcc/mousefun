@@ -121,12 +121,10 @@ const MouseTrailGame: React.FC<MouseTrailGameProps> = ({
         setTimeout(() => setStarEarnedEffect(false), 2000);
         
         // Set pending callbacks to be handled in useEffect
-        setPendingStarEarned(newStarCount);
         
         // Check if we earned all 5 stars (should only complete when we have 5 stars)
         if (newStarCount === 5) {
           updates.gameCompleted = true;
-          setPendingGameComplete(true);
         } else {
           // Set the next star number immediately in the current update
           const nextStarNumber = prev.currentStar + 1;
@@ -154,20 +152,7 @@ const MouseTrailGame: React.FC<MouseTrailGameProps> = ({
     });
   }, [gameState.gameStarted, gameState.starCompleted, gameState.gameCompleted, gameState.currentStar, onStarEarned, onGameComplete]);
 
-  // Handle pending callbacks to avoid setState during render
-  useEffect(() => {
-    if (pendingStarEarned !== null) {
-      onStarEarned?.(pendingStarEarned);
-      setPendingStarEarned(null);
-    }
-  }, [pendingStarEarned, onStarEarned]);
-
-  useEffect(() => {
-    if (pendingGameComplete) {
-      onGameComplete?.(true);
-      setPendingGameComplete(false);
-    }
-  }, [pendingGameComplete, onGameComplete]);
+  
 
   if (!gameState.gameStarted) {
     return (

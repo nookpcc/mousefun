@@ -172,14 +172,9 @@ const AreaCoverGame: React.FC<AreaCoverGameProps> = ({
             }, 2000);
           }
         } 
-      } else if (newAreasCovered < level.target && currentTarget && currentTarget.isCovered) {
-        // If current target is covered but level not complete, generate new target
-        setTimeout(() => {
-          setGameState(currentState => ({
-            ...currentState,
-            targetAreas: [generateTargetArea(level)],
-          }));
-        }, 500); // Small delay before new target appears
+      } else if (newAreasCovered < level.target && currentTarget && newTargetAreas.find(a => a.id === currentTarget.id)?.isCovered) {
+        // If current target is covered but level not complete, generate new target immediately
+        updates.targetAreas = [generateTargetArea(level)];
       }
 
       return { ...prev, ...updates };
@@ -427,7 +422,7 @@ const AreaCoverGame: React.FC<AreaCoverGameProps> = ({
               <button
                 className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
                 onClick={() => {
-                  window.dispatchEvent(new CustomEvent('nextGame'));
+                  onGameComplete(true);
                 }}
               >
                 ➡️ {t('nextGame')}

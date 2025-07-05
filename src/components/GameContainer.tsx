@@ -17,16 +17,6 @@ interface GameContainerProps {
 const GameContainer: React.FC<GameContainerProps> = ({ games, currentGameIndex, gameKey, onSelectGame, onNextGame, onPrevGame }) => {
   const { gameProgress, updateGameProgress } = useGameStore();
 
-  // Listen for nextGame event from games
-  React.useEffect(() => {
-    const handleNextGame = () => {
-      onNextGame();
-    };
-
-    window.addEventListener('nextGame', handleNextGame);
-    return () => window.removeEventListener('nextGame', handleNextGame);
-  }, [onNextGame]);
-  
   const currentGame = games[currentGameIndex];
   const currentProgress = gameProgress[currentGame.id] || {
     gameId: currentGame.id,
@@ -40,12 +30,11 @@ const GameContainer: React.FC<GameContainerProps> = ({ games, currentGameIndex, 
     updateGameProgress(currentGame.id, stars);
   }, [currentGame.id, updateGameProgress]);
 
-  const handleGameComplete = (completed: boolean) => {
-    // Auto advance logic can be handled by parent component
+  const handleGameComplete = React.useCallback((completed: boolean) => {
     if (completed && currentProgress.stars >= 5) {
-      // Could emit event to parent for auto-advance
+      onNextGame();
     }
-  };
+  }, [currentProgress.stars, onNextGame]);
 
   const GameComponent = currentGame.component;
 

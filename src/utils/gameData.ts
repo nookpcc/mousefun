@@ -6,7 +6,6 @@ import {
   BalloonPopGame,
   ShapeSortGame,
   ActionClickerGame,
-  MazeRunnerGame,
   ScrollChallengeGame,
   AreaCoverGame,
 } from '../games';
@@ -89,18 +88,6 @@ export const gameDataStatic = [
     thumbnail: '🔲',
     backgroundColor: 'linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%)',
     component: AreaCoverGame
-  },
-  
-  // 8. Maze Runner
-  {
-    id: 'maze-runner',
-    titleKey: 'title',
-    descriptionKey: 'description',
-    difficulty: 'medium' as const,
-    category: 'movement' as const,
-    thumbnail: '🏃‍♂️',
-    backgroundColor: 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)',
-    component: MazeRunnerGame
   },
 ];
 

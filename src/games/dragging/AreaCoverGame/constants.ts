@@ -45,3 +45,4 @@ export const AREA_COVER_STAR_LEVELS: AreaCoverLevel[] = [
 
 export const GAME_AREA_WIDTH = 700;
 export const GAME_AREA_HEIGHT = 400;
+export const HEADER_HEIGHT = 80;

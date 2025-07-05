@@ -1,11 +1,11 @@
 import { TargetArea, AreaCoverLevel } from './types';
-import { GAME_AREA_WIDTH, GAME_AREA_HEIGHT } from './constants';
+import { GAME_AREA_WIDTH, GAME_AREA_HEIGHT, HEADER_HEIGHT } from './constants';
 
 export const generateTargetArea = (level: AreaCoverLevel): TargetArea => {
   const width = Math.floor(Math.random() * (level.maxTargetSize - level.minTargetSize + 1)) + level.minTargetSize;
   const height = Math.floor(Math.random() * (level.maxTargetSize - level.minTargetSize + 1)) + level.minTargetSize;
   const x = Math.random() * (GAME_AREA_WIDTH - width);
-  const y = Math.random() * (GAME_AREA_HEIGHT - height);
+  const y = HEADER_HEIGHT + (Math.random() * (GAME_AREA_HEIGHT - height - HEADER_HEIGHT));
 
   return {
     id: `target-${Date.now()}-${Math.random()}`,
