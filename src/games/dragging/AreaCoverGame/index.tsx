@@ -422,7 +422,7 @@ const AreaCoverGame: React.FC<AreaCoverGameProps> = ({
               <button
                 className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
                 onClick={() => {
-                  onGameComplete(true);
+                  onGameComplete?.(true);
                 }}
               >
                 ➡️ {t('nextGame')}

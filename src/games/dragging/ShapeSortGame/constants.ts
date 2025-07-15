@@ -19,6 +19,7 @@ export const TARGET_COLORS: { [key in ShapeType]: string } = {
 export const SHAPE_SORT_STAR_LEVELS: ShapeSortStarLevel[] = [
   {
     star: 1,
+    target: 3,
     shapes: ['circle', 'square'],
     shapeCount: 3,
     timeLimit: 60,
@@ -26,6 +27,7 @@ export const SHAPE_SORT_STAR_LEVELS: ShapeSortStarLevel[] = [
   },
   {
     star: 2,
+    target: 5,
     shapes: ['circle', 'square'],
     shapeCount: 5,
     timeLimit: 50,
@@ -33,6 +35,7 @@ export const SHAPE_SORT_STAR_LEVELS: ShapeSortStarLevel[] = [
   },
   {
     star: 3,
+    target: 4,
     shapes: ['circle', 'square', 'triangle'],
     shapeCount: 4,
     timeLimit: 45,
@@ -40,6 +43,7 @@ export const SHAPE_SORT_STAR_LEVELS: ShapeSortStarLevel[] = [
   },
   {
     star: 4,
+    target: 6,
     shapes: ['circle', 'square', 'triangle'],
     shapeCount: 6,
     timeLimit: 40,
@@ -47,6 +51,7 @@ export const SHAPE_SORT_STAR_LEVELS: ShapeSortStarLevel[] = [
   },
   {
     star: 5,
+    target: 5,
     shapes: ['circle', 'square', 'triangle', 'star'],
     shapeCount: 5,
     timeLimit: 35,
