@@ -68,7 +68,6 @@ interface ClickTargetGameProps extends GameProps {}
 const ClickTargetGame: React.FC<ClickTargetGameProps> = ({ 
   onStarEarned, 
   onGameComplete, 
-  currentStars = 0,
   gameKey = 0
 }) => {
   const fonts = useFontClasses();

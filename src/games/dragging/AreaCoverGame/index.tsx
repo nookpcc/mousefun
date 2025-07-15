@@ -193,15 +193,15 @@ const AreaCoverGame: React.FC<AreaCoverGameProps> = ({
 
   // Handle pending callbacks to avoid setState during render
   useEffect(() => {
-    if (pendingStarEarned !== null) {
-      onStarEarned?.(pendingStarEarned);
+    if (pendingStarEarned !== null && onStarEarned) {
+      onStarEarned(pendingStarEarned);
       setPendingStarEarned(null);
     }
   }, [pendingStarEarned, onStarEarned]);
 
   useEffect(() => {
-    if (pendingGameComplete) {
-      onGameComplete?.(true);
+    if (pendingGameComplete && onGameComplete) {
+      onGameComplete(true);
       setPendingGameComplete(false);
     }
   }, [pendingGameComplete, onGameComplete]);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { GameProps } from '../../../types';
 
-const HouseExplorerGame: React.FC<GameProps> = ({ onStarEarned, onGameComplete }) => {
+const HouseExplorerGame: React.FC<GameProps> = ({ onGameComplete }) => {
   return (
     <div className="flex items-center justify-center h-full">
       <div className="text-center">

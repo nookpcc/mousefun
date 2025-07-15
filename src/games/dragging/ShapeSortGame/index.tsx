@@ -1,7 +1,7 @@
 import React from 'react';
 import { GameProps } from '../../../types';
 
-const ShapeSortGame: React.FC<GameProps> = ({ onStarEarned, onGameComplete }) => {
+const ShapeSortGame: React.FC<GameProps> = ({ onGameComplete }) => {
   return (
     <div className="flex items-center justify-center h-full">
       <div className="text-center">

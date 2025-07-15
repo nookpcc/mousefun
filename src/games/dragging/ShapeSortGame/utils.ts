@@ -1,15 +1,8 @@
-import { Shape, Target, ShapeType, ShapeSortStarLevel } from './types';
+import { Shape, Target, ShapeType } from './types';
 import { GamePosition } from '../../shared/types';
 
 export const generateId = (): string => {
   return Math.random().toString(36).substr(2, 9);
-};
-
-const SHAPE_COLORS = {
-  circle: '#ff6b6b',
-  square: '#4ecdc4',
-  triangle: '#45b7d1',
-  star: '#feca57'
 };
 
 const SHAPE_COLORS: Record<ShapeType, string> = {

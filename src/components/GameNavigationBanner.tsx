@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { GameData } from '../types';
 import { useFontClasses } from '../hooks/useFontClasses';
-import { useLanguage } from '../contexts/LanguageContext';
 
 interface GameNavigationBannerProps {
   games: GameData[];
@@ -20,7 +19,6 @@ const GameNavigationBanner: React.FC<GameNavigationBannerProps> = ({
   onNextGame
 }) => {
   const fonts = useFontClasses();
-  const { t } = useLanguage();
 
   return (
     <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4 mb-4 shadow-lg">

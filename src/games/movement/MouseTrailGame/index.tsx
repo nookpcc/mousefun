@@ -1,7 +1,7 @@
 import React from 'react';
 import { GameProps } from '../../../types';
 
-const MouseTrailGame: React.FC<GameProps> = ({ onStarEarned, onGameComplete }) => {
+const MouseTrailGame: React.FC<GameProps> = ({ onGameComplete }) => {
   return (
     <div className="flex items-center justify-center h-full bg-gradient-to-br from-purple-100 to-pink-100 rounded-lg">
       <div className="text-center">

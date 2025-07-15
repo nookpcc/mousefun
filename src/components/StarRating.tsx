@@ -50,11 +50,11 @@ const StarRating: React.FC<StarRatingProps> = ({
             }`}
             initial={showAnimation ? { scale: 0, rotate: -180 } : false}
             animate={showAnimation ? { scale: 1, rotate: 0 } : false}
-            transition={showAnimation ? { 
+            transition={showAnimation && index === stars - 1 ? { 
               delay: index * 0.1,
               type: "spring",
               stiffness: 200
-            } : false}
+            } : undefined}
             whileHover={{ scale: 1.2 }}
           >
             {index < stars ? '⭐' : '☆'}

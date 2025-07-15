@@ -44,6 +44,7 @@ export const useGameStore = create<GameStore>()(persist(
     endGame: (gameId: string) => {
       const session = get().currentSession;
       if (!session) return;
+      if (session.gameId !== gameId) return; // Use gameId parameter
 
       const endTime = new Date();
       const duration = endTime.getTime() - session.startTime.getTime();
