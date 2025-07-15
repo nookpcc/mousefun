@@ -1,0 +1,4 @@
+🚀 Force Vercel Redeploy - Build Fix Applied
+
+This commit triggers a new deployment with terser fix.
+Timestamp: $(date)
