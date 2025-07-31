@@ -1,63 +1,32 @@
-import { MouseTrailStarLevel } from './types';
+import { GAME_BOUNDS } from '../../shared/constants';
 
-export const TRAIL_LENGTH = 20;
-export const COLLECTION_DISTANCE = 30;
+export const TRAIL_CONFIG = {
+  MAX_LENGTH: 30,
+  FADE_DURATION: 1000, // ms
+  COLLECTION_DISTANCE: 35,
+  TRAIL_WIDTH: 6
+};
 
-export const STAR_COLORS = [
+export const GEM_CONFIG = {
+  MIN_SIZE: 25,
+  MAX_SIZE: 45,
+  SPAWN_PADDING: 50,
+  GLOW_ANIMATION_SPEED: 0.02,
+  SPARKLE_COUNT: 3
+};
+
+export const GEM_COLORS = [
   '#FFD700', // Gold
-  '#FF6B6B', // Red
-  '#4ECDC4', // Teal  
-  '#45B7D1', // Blue
-  '#96CEB4', // Green
-  '#FECA57', // Yellow
-  '#FF9FF3', // Pink
-  '#54A0FF', // Light Blue
+  '#FF6B6B', // Ruby Red
+  '#4ECDC4', // Emerald Teal  
+  '#45B7D1', // Sapphire Blue
+  '#96CEB4', // Jade Green
+  '#FECA57', // Topaz Yellow
+  '#FF9FF3', // Amethyst Pink
+  '#54A0FF'  // Diamond Blue
 ];
 
-export const MOUSE_TRAIL_STAR_LEVELS: MouseTrailStarLevel[] = [
-  {
-    star: 1,
-    target: 3,
-    starCount: 3,
-    starSize: { min: 30, max: 40 },
-    timeLimit: 60,
-    spawnDelay: 500,
-    description: 'เก็บดาว 3 ดวง'
-  },
-  {
-    star: 2,
-    target: 5,
-    starCount: 5,
-    starSize: { min: 25, max: 35 },
-    timeLimit: 45,
-    spawnDelay: 400,
-    description: 'เก็บดาว 5 ดวง'
-  },
-  {
-    star: 3,
-    target: 7,
-    starCount: 7,
-    starSize: { min: 20, max: 30 },
-    timeLimit: 40,
-    spawnDelay: 300,
-    description: 'เก็บดาว 7 ดวง'
-  },
-  {
-    star: 4,
-    target: 10,
-    starCount: 10,
-    starSize: { min: 18, max: 25 },
-    timeLimit: 35,
-    spawnDelay: 250,
-    description: 'เก็บดาว 10 ดวง'
-  },
-  {
-    star: 5,
-    target: 15,
-    starCount: 15,
-    starSize: { min: 15, max: 22 },
-    timeLimit: 30,
-    spawnDelay: 200,
-    description: 'เก็บดาว 15 ดวง'
-  }
-];
+export const GAME_AREA = {
+  width: GAME_BOUNDS.WIDTH,
+  height: GAME_BOUNDS.HEIGHT
+};

@@ -1,68 +1,88 @@
-import { Star, MouseTrailStarLevel } from './types';
-import { COLLECTION_DISTANCE } from './constants';
-import { generateId, getRandomPosition, getRandomSize, calculateDistance } from '../../shared/gameUtils';
+import { Gem, TrailPoint } from './types';
+import { TRAIL_CONFIG, GEM_CONFIG, GEM_COLORS, GAME_AREA } from './constants';
+import { generateId, getRandomColor, getRandomSize, calculateDistance } from '../../shared/gameUtils';
 import { GamePosition } from '../../shared/types';
 
-export const generateStar = (level: MouseTrailStarLevel): Star => {
-  const size = getRandomSize(level.starSize.min, level.starSize.max);
+export const createGem = (existingGems: Gem[] = []): Gem => {
+  const size = getRandomSize(GEM_CONFIG.MIN_SIZE, GEM_CONFIG.MAX_SIZE);
+  const color = getRandomColor(GEM_COLORS);
+  
+  let position: GamePosition;
+  let attempts = 0;
+  
+  do {
+    position = {
+      x: Math.random() * (GAME_AREA.width - size - GEM_CONFIG.SPAWN_PADDING * 2) + GEM_CONFIG.SPAWN_PADDING,
+      y: Math.random() * (GAME_AREA.height - size - GEM_CONFIG.SPAWN_PADDING * 2) + GEM_CONFIG.SPAWN_PADDING + 60
+    };
+    attempts++;
+  } while (
+    attempts < 20 && 
+    existingGems.some(gem => 
+      !gem.collected && 
+      calculateDistance(position, gem.position) < size + (gem.size || 30) + 20
+    )
+  );
   
   return {
     id: generateId(),
-    position: getRandomPosition({
-      left: size / 2 + 20,
-      right: 728 - size / 2 - 20,
-      top: size / 2 + 60, // Account for UI
-      bottom: 400 - size / 2 - 20
-    }),
+    type: 'gem',
+    position,
     size,
+    color,
     collected: false,
-    glowIntensity: Math.random() * 0.5 + 0.5
+    glowIntensity: Math.random() * 0.5 + 0.5,
+    sparkleOffset: Math.random() * Math.PI * 2,
+    isActive: true
   };
 };
 
-export const generateAllStars = (level: MouseTrailStarLevel): Star[] => {
-  const stars: Star[] = [];
-  const positions: GamePosition[] = [];
+export const generateGems = (count: number): Gem[] => {
+  const gems: Gem[] = [];
   
-  for (let i = 0; i < level.starCount; i++) {
-    let attempts = 0;
-    let star: Star;
-    
-    do {
-      star = generateStar(level);
-      attempts++;
-    } while (
-      attempts < 20 && 
-      positions.some(pos => calculateDistance(pos, star.position) < 60)
-    );
-    
-    stars.push(star);
-    positions.push(star.position);
+  for (let i = 0; i < count; i++) {
+    const gem = createGem(gems);
+    gems.push(gem);
   }
   
-  return stars;
+  return gems;
 };
 
-export const checkStarCollection = (
+export const checkGemCollection = (
   mousePos: GamePosition, 
-  star: Star
+  gem: Gem
 ): boolean => {
-  if (star.collected) return false;
-  return calculateDistance(mousePos, star.position) <= COLLECTION_DISTANCE;
+  if (gem.collected || !gem.isActive) return false;
+  const gemCenter = {
+    x: gem.position.x + (gem.size || 30) / 2,
+    y: gem.position.y + (gem.size || 30) / 2
+  };
+  return calculateDistance(mousePos, gemCenter) <= TRAIL_CONFIG.COLLECTION_DISTANCE;
 };
 
-export const updateTrail = (
-  currentTrail: { x: number; y: number; opacity: number }[],
-  mousePos: GamePosition,
-  maxLength: number = 20
-): { x: number; y: number; opacity: number }[] => {
-  const newTrail = [
-    { x: mousePos.x, y: mousePos.y, opacity: 1 },
-    ...currentTrail.slice(0, maxLength - 1)
+export const updateMouseTrail = (
+  currentTrail: TrailPoint[],
+  mousePos: GamePosition
+): TrailPoint[] => {
+  const now = Date.now();
+  
+  // Add new point
+  const newTrail: TrailPoint[] = [
+    { 
+      x: mousePos.x, 
+      y: mousePos.y, 
+      opacity: 1, 
+      timestamp: now 
+    },
+    ...currentTrail
   ];
   
-  return newTrail.map((point, index) => ({
-    ...point,
-    opacity: 1 - (index / maxLength)
-  }));
+  // Remove old points and update opacity
+  return newTrail
+    .filter(point => now - point.timestamp < TRAIL_CONFIG.FADE_DURATION)
+    .slice(0, TRAIL_CONFIG.MAX_LENGTH)
+    .map(point => ({
+      ...point,
+      opacity: Math.max(0, 1 - (now - point.timestamp) / TRAIL_CONFIG.FADE_DURATION)
+    }));
 };

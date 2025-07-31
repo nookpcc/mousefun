@@ -1,17 +1,15 @@
-import { Balloon, BalloonPopStarLevel } from './types';
-import { BALLOON_COLORS, GAME_AREA } from './constants';
+import { Balloon } from './types';
+import { BALLOON_COLORS, BALLOON_CONFIG, GAME_AREA } from './constants';
+import { generateId, getRandomColor, getRandomSize, calculateDistance } from '../../shared/gameUtils';
 
-export const generateBalloonId = (): string => {
-  return Math.random().toString(36).substr(2, 9);
-};
-
-export const createBalloon = (level: BalloonPopStarLevel): Balloon => {
-  const size = Math.random() * (level.balloonSize.max - level.balloonSize.min) + level.balloonSize.min;
-  const speed = Math.random() * (level.balloonSpeed.max - level.balloonSpeed.min) + level.balloonSpeed.min;
-  const color = BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)];
+export const createBalloon = (difficultyMultiplier: number = 1): Balloon => {
+  const size = getRandomSize(BALLOON_CONFIG.MIN_SIZE, BALLOON_CONFIG.MAX_SIZE / difficultyMultiplier);
+  const speed = BALLOON_CONFIG.FLOAT_SPEED * difficultyMultiplier;
+  const color = getRandomColor([...BALLOON_COLORS]);
   
   return {
-    id: generateBalloonId(),
+    id: generateId(),
+    type: 'balloon',
     position: {
       x: Math.random() * (GAME_AREA.width - size),
       y: GAME_AREA.height + size // Start below screen to float up
@@ -19,8 +17,9 @@ export const createBalloon = (level: BalloonPopStarLevel): Balloon => {
     size,
     color,
     speed,
+    direction: -1, // Float upward
     popped: false,
-    created: Date.now()
+    isActive: true
   };
 };
 
@@ -30,30 +29,24 @@ export const updateBalloons = (balloons: Balloon[]): Balloon[] => {
       ...balloon,
       position: {
         ...balloon.position,
-        y: balloon.position.y - balloon.speed
+        y: balloon.position.y + (balloon.speed * balloon.direction)
       }
     }))
-    .filter(balloon => !balloon.popped && balloon.position.y > -balloon.size);
+    .filter(balloon => 
+      balloon.isActive && 
+      !balloon.popped && 
+      balloon.position.y > -(balloon.size || 50)
+    );
 };
 
 export const checkBalloonClick = (
   mousePos: { x: number; y: number },
   balloon: Balloon
 ): boolean => {
-  const centerX = balloon.position.x + balloon.size / 2;
-  const centerY = balloon.position.y + balloon.size / 2;
-  const radius = balloon.size / 2;
+  const centerX = balloon.position.x + (balloon.size || 50) / 2;
+  const centerY = balloon.position.y + (balloon.size || 50) / 2;
+  const radius = (balloon.size || 50) / 2;
   
-  const distance = Math.sqrt(
-    Math.pow(mousePos.x - centerX, 2) + Math.pow(mousePos.y - centerY, 2)
-  );
-  
+  const distance = calculateDistance(mousePos, { x: centerX, y: centerY });
   return distance <= radius;
-};
-
-export const shouldSpawnBalloon = (
-  lastSpawn: number,
-  spawnRate: number
-): boolean => {
-  return Date.now() - lastSpawn >= spawnRate;
 };
