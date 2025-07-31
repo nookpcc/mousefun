@@ -1,7 +1,8 @@
-import { Maze, MazeTile, MazeRunnerStarLevel, Player } from './types';
-import { PLAYER_SIZE } from './constants';
+import { Maze, MazeTile, Player, MazeConfig } from './types';
+import { PLAYER_SIZE, MAZE_CONFIGS } from './constants';
 
-export const createMaze = (level: MazeRunnerStarLevel): Maze => {
+export const createMaze = (starLevel: number): Maze => {
+  const level = MAZE_CONFIGS[starLevel - 1];
   const tiles: MazeTile[][] = [];
   let startPos = { x: 0, y: 0 };
   let endPos = { x: 0, y: 0 };
@@ -17,6 +18,10 @@ export const createMaze = (level: MazeRunnerStarLevel): Maze => {
   }
 
   return { tiles, start: startPos, end: endPos };
+};
+
+export const getMazeConfig = (starLevel: number): MazeConfig => {
+  return MAZE_CONFIGS[starLevel - 1];
 };
 
 export const initializePlayer = (maze: Maze, tileSize: number): Player => {

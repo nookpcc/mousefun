@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GameProps } from '../../../types';
 import { HouseItem, HOUSE_EXPLORER_STAR_LEVELS } from './types';
 import { HOUSE_ITEMS, HOVER_CONFIG, ITEM_CONFIG, GAME_AREA } from './constants';
-import { GameUI } from '../../shared/GameUI';
+import { SimpleGameUI } from '../../shared/GameUI';
 import { ParticleSystem } from '../../shared/ParticleSystem';
-import { useGameLogic } from '../../shared/useGameLogic';
+import { useSimpleGameLogic } from '../../shared/useSimpleGameLogic';
 import { createStarBurst } from '../../shared/effects';
 import { generateId, calculateDistance } from '../../shared/gameUtils';
 
@@ -22,12 +22,13 @@ const HouseExplorerGame: React.FC<GameProps> = ({
   const {
     gameState,
     particles,
+    starEarnedEffect,
     startGame,
     restartGame,
     addScore,
     addParticles,
     setParticles
-  } = useGameLogic({
+  } = useSimpleGameLogic({
     starLevels: HOUSE_EXPLORER_STAR_LEVELS,
     onStarEarned,
     onGameComplete
@@ -38,7 +39,7 @@ const HouseExplorerGame: React.FC<GameProps> = ({
     if (!gameState.isStarted) return;
     
     const currentLevel = HOUSE_EXPLORER_STAR_LEVELS[gameState.currentStar - 1];
-    const itemCount = currentLevel ? currentLevel.target + 3 : 5;
+    const itemCount = currentLevel ? currentLevel.target : 5;
     const newItems: HouseItem[] = [];
     
     for (let i = 0; i < itemCount; i++) {
@@ -173,9 +174,10 @@ const HouseExplorerGame: React.FC<GameProps> = ({
   };
 
   return (
-    <GameUI
+    <SimpleGameUI
+      gameTitle="เกมค้นหาของในบ้าน"
+      gameEmoji="🏠"
       score={gameState.score}
-      timeRemaining={gameState.timeRemaining}
       currentStar={gameState.currentStar}
       starsEarned={gameState.starsEarned}
       gameStarted={gameState.isStarted}
@@ -183,6 +185,8 @@ const HouseExplorerGame: React.FC<GameProps> = ({
       starLevels={HOUSE_EXPLORER_STAR_LEVELS}
       onStartGame={handleStartGame}
       onRestartGame={handleRestartGame}
+      onNextGame={() => onGameComplete?.(true)}
+      starEarnedEffect={starEarnedEffect}
     >
       <div 
         className="w-full h-full relative bg-gradient-to-br from-amber-100 to-orange-200 overflow-hidden cursor-pointer"
@@ -269,7 +273,7 @@ const HouseExplorerGame: React.FC<GameProps> = ({
         {/* Particle effects */}
         <ParticleSystem particles={particles} onParticlesUpdate={setParticles} />
       </div>
-    </GameUI>
+    </SimpleGameUI>
   );
 };
 

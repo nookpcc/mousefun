@@ -1,7 +1,12 @@
-import { TargetArea, AreaCoverLevel } from './types';
-import { GAME_AREA_WIDTH, GAME_AREA_HEIGHT, HEADER_HEIGHT } from './constants';
+import { TargetArea, AreaCoverConfig } from './types';
+import { GAME_AREA_WIDTH, GAME_AREA_HEIGHT, HEADER_HEIGHT, AREA_COVER_CONFIGS } from './constants';
 
-export const generateTargetArea = (level: AreaCoverLevel): TargetArea => {
+export const getAreaCoverConfig = (starLevel: number): AreaCoverConfig => {
+  return AREA_COVER_CONFIGS[starLevel - 1];
+};
+
+export const generateTargetArea = (starLevel: number): TargetArea => {
+  const level = getAreaCoverConfig(starLevel);
   const width = Math.floor(Math.random() * (level.maxTargetSize - level.minTargetSize + 1)) + level.minTargetSize;
   const height = Math.floor(Math.random() * (level.maxTargetSize - level.minTargetSize + 1)) + level.minTargetSize;
   const x = Math.random() * (GAME_AREA_WIDTH - width);

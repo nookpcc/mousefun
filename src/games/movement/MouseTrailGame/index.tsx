@@ -4,9 +4,9 @@ import { GameProps } from '../../../types';
 import { Gem, TrailPoint, MOUSE_TRAIL_STAR_LEVELS } from './types';
 import { TRAIL_CONFIG, GEM_CONFIG } from './constants';
 import { generateGems, checkGemCollection, updateMouseTrail } from './utils';
-import { GameUI } from '../../shared/GameUI';
+import { SimpleGameUI } from '../../shared/GameUI';
 import { ParticleSystem } from '../../shared/ParticleSystem';
-import { useGameLogic } from '../../shared/useGameLogic';
+import { useSimpleGameLogic } from '../../shared/useSimpleGameLogic';
 import { createCollectionEffect } from '../../shared/effects';
 
 const MouseTrailGame: React.FC<GameProps> = ({ 
@@ -23,12 +23,13 @@ const MouseTrailGame: React.FC<GameProps> = ({
   const {
     gameState,
     particles,
+    starEarnedEffect,
     startGame,
     restartGame,
     addScore,
     addParticles,
     setParticles
-  } = useGameLogic({
+  } = useSimpleGameLogic({
     starLevels: MOUSE_TRAIL_STAR_LEVELS,
     onStarEarned,
     onGameComplete
@@ -39,7 +40,7 @@ const MouseTrailGame: React.FC<GameProps> = ({
     if (!gameState.isStarted) return;
     
     const currentLevel = MOUSE_TRAIL_STAR_LEVELS[gameState.currentStar - 1];
-    const gemsCount = currentLevel ? currentLevel.target + (gameState.currentStar - 1) * 2 : 5;
+    const gemsCount = currentLevel ? currentLevel.target : 5;
     const newGems = generateGems(gemsCount);
     setGems(newGems);
   }, [gameState.isStarted, gameState.currentStar]);
@@ -97,7 +98,7 @@ const MouseTrailGame: React.FC<GameProps> = ({
 
   // Start animation loop
   useEffect(() => {
-    if (gameState.isStarted && !gameState.isCompleted) {
+    if (gameState.isStarted && !gameState.isCompleted && !gameState.starCompleted) {
       animationFrameRef.current = requestAnimationFrame(animateGems);
     } else {
       if (animationFrameRef.current) {
@@ -110,7 +111,7 @@ const MouseTrailGame: React.FC<GameProps> = ({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [gameState.isStarted, gameState.isCompleted, animateGems]);
+  }, [gameState.isStarted, gameState.isCompleted, gameState.starCompleted, animateGems]);
 
   // Initialize gems when starting
   useEffect(() => {
@@ -137,9 +138,10 @@ const MouseTrailGame: React.FC<GameProps> = ({
   }, [restartGame]);
 
   return (
-    <GameUI
+    <SimpleGameUI
+      gameTitle="เกมเก็บเพชร"  
+      gameEmoji="🌟"
       score={gameState.score}
-      timeRemaining={gameState.timeRemaining}
       currentStar={gameState.currentStar}
       starsEarned={gameState.starsEarned}
       gameStarted={gameState.isStarted}
@@ -147,6 +149,8 @@ const MouseTrailGame: React.FC<GameProps> = ({
       starLevels={MOUSE_TRAIL_STAR_LEVELS}
       onStartGame={handleStartGame}
       onRestartGame={handleRestartGame}
+      onNextGame={() => onGameComplete?.(true)}
+      starEarnedEffect={starEarnedEffect}
     >
       <div 
         ref={gameAreaRef}
@@ -290,7 +294,7 @@ const MouseTrailGame: React.FC<GameProps> = ({
         {/* Particle effects */}
         <ParticleSystem particles={particles} onParticlesUpdate={setParticles} />
       </div>
-    </GameUI>
+    </SimpleGameUI>
   );
 };
 

@@ -1,4 +1,4 @@
-import { GameEntity, StarLevel } from '../../shared/types';
+import { GameEntity } from '../../shared/types';
 
 export interface Balloon extends GameEntity {
   type: 'balloon';
@@ -14,35 +14,30 @@ export interface BalloonGameState {
   difficultyMultiplier: number;
 }
 
-export const BALLOON_STAR_LEVELS: StarLevel[] = [
+export const BALLOON_STAR_LEVELS = [
   {
     star: 1,
-    target: 10,
-    timeLimit: 30,
-    description: 'แตะบอลลูน 10 ลูก ใน 30 วินาที'
+    target: 5,
+    description: 'แตะบอลลูน 5 ลูก'
   },
   {
     star: 2,
-    target: 25,
-    timeLimit: 45,
-    description: 'แตะบอลลูน 25 ลูก ใน 45 วินาที'
+    target: 10,
+    description: 'แตะบอลลูน 10 ลูก'
   },
   {
     star: 3,
-    target: 50,
-    timeLimit: 60,
-    description: 'แตะบอลลูน 50 ลูก ใน 60 วินาที'
+    target: 20,
+    description: 'แตะบอลลูน 20 ลูก'
   },
   {
     star: 4,
-    target: 80,
-    timeLimit: 75,
-    description: 'แตะบอลลูน 80 ลูก ใน 75 วินาที'
+    target: 35,
+    description: 'แตะบอลลูน 35 ลูก'
   },
   {
     star: 5,
-    target: 120,
-    timeLimit: 90,
-    description: 'แตะบอลลูน 120 ลูก ใน 90 วินาที'
+    target: 50,
+    description: 'แตะบอลลูน 50 ลูก'
   }
 ];

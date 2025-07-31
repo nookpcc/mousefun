@@ -1,4 +1,4 @@
-import { GameEntity, StarLevel } from '../../shared/types';
+import { GameEntity } from '../../shared/types';
 
 export interface Gem extends GameEntity {
   type: 'gem';
@@ -20,35 +20,30 @@ export interface MouseTrailGameState {
   mouseTrail: TrailPoint[];
 }
 
-export const MOUSE_TRAIL_STAR_LEVELS: StarLevel[] = [
+export const MOUSE_TRAIL_STAR_LEVELS = [
   {
     star: 1,
-    target: 5,
-    timeLimit: 45,
-    description: 'เก็บเพชร 5 เม็ด ใน 45 วินาที'
+    target: 3,
+    description: 'เก็บเพชร 3 เม็ด'
   },
   {
     star: 2,
-    target: 10,
-    timeLimit: 60,
-    description: 'เก็บเพชร 10 เม็ด ใน 60 วินาที'
+    target: 6,
+    description: 'เก็บเพชร 6 เม็ด'
   },
   {
     star: 3,
-    target: 15,
-    timeLimit: 75,
-    description: 'เก็บเพชร 15 เม็ด ใน 75 วินาที'
+    target: 10,
+    description: 'เก็บเพชร 10 เม็ด'
   },
   {
     star: 4,
-    target: 25,
-    timeLimit: 90,
-    description: 'เก็บเพชร 25 เม็ด ใน 90 วินาที'
+    target: 15,
+    description: 'เก็บเพชร 15 เม็ด'
   },
   {
     star: 5,
-    target: 35,
-    timeLimit: 120,
-    description: 'เก็บเพชร 35 เม็ด ใน 120 วินาที'
+    target: 20,
+    description: 'เก็บเพชร 20 เม็ด'
   }
 ];

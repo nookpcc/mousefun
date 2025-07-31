@@ -4,9 +4,9 @@ import { GameProps } from '../../../types';
 import { Balloon, BALLOON_STAR_LEVELS } from './types';
 import { BALLOON_CONFIG } from './constants';
 import { createBalloon, updateBalloons } from './utils';
-import { GameUI } from '../../shared/GameUI';
+import { SimpleGameUI } from '../../shared/GameUI';
 import { ParticleSystem } from '../../shared/ParticleSystem';
-import { useGameLogic } from '../../shared/useGameLogic';
+import { useSimpleGameLogic } from '../../shared/useSimpleGameLogic';
 import { createPopEffect } from '../../shared/effects';
 
 const BalloonPopGame: React.FC<GameProps> = ({ 
@@ -22,12 +22,13 @@ const BalloonPopGame: React.FC<GameProps> = ({
   const {
     gameState,
     particles,
+    starEarnedEffect,
     startGame,
     restartGame,
     addScore,
     addParticles,
     setParticles
-  } = useGameLogic({
+  } = useSimpleGameLogic({
     starLevels: BALLOON_STAR_LEVELS,
     onStarEarned,
     onGameComplete
@@ -79,7 +80,7 @@ const BalloonPopGame: React.FC<GameProps> = ({
 
   // Game loop effects
   useEffect(() => {
-    if (!gameState.isStarted || gameState.isCompleted) {
+    if (!gameState.isStarted || gameState.isCompleted || gameState.starCompleted) {
       if (spawnTimerRef.current) clearInterval(spawnTimerRef.current);
       if (updateTimerRef.current) clearInterval(updateTimerRef.current);
       return;
@@ -95,7 +96,7 @@ const BalloonPopGame: React.FC<GameProps> = ({
       if (spawnTimerRef.current) clearInterval(spawnTimerRef.current);
       if (updateTimerRef.current) clearInterval(updateTimerRef.current);
     };
-  }, [gameState.isStarted, gameState.isCompleted, spawnBalloon, updateGameBalloons]);
+  }, [gameState.isStarted, gameState.isCompleted, gameState.starCompleted, spawnBalloon, updateGameBalloons]);
 
   // Reset game on key change
   useEffect(() => {
@@ -112,9 +113,10 @@ const BalloonPopGame: React.FC<GameProps> = ({
   }, []);
 
   return (
-    <GameUI
+    <SimpleGameUI
+      gameTitle="เกมแตะบอลลูน"
+      gameEmoji="🎈"
       score={gameState.score}
-      timeRemaining={gameState.timeRemaining}
       currentStar={gameState.currentStar}
       starsEarned={gameState.starsEarned}
       gameStarted={gameState.isStarted}
@@ -122,6 +124,8 @@ const BalloonPopGame: React.FC<GameProps> = ({
       starLevels={BALLOON_STAR_LEVELS}
       onStartGame={startGame}
       onRestartGame={restartGame}
+      onNextGame={() => onGameComplete?.(true)}
+      starEarnedEffect={starEarnedEffect}
     >
       <div 
         ref={gameAreaRef}
@@ -220,7 +224,7 @@ const BalloonPopGame: React.FC<GameProps> = ({
         {/* Particle effects */}
         <ParticleSystem particles={particles} onParticlesUpdate={setParticles} />
       </div>
-    </GameUI>
+    </SimpleGameUI>
   );
 };
 
