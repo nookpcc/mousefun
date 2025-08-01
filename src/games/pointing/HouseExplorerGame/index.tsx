@@ -50,7 +50,7 @@ const HouseExplorerGame: React.FC<GameProps> = ({
       do {
         position = {
           x: Math.random() * (GAME_AREA.width - ITEM_CONFIG.MAX_SIZE - ITEM_CONFIG.SPAWN_PADDING) + ITEM_CONFIG.SPAWN_PADDING,
-          y: Math.random() * (GAME_AREA.height - ITEM_CONFIG.MAX_SIZE - ITEM_CONFIG.SPAWN_PADDING) + ITEM_CONFIG.SPAWN_PADDING + 60
+          y: Math.random() * (GAME_AREA.height - ITEM_CONFIG.MAX_SIZE - ITEM_CONFIG.SPAWN_PADDING - 120) + ITEM_CONFIG.SPAWN_PADDING + 80
         };
         attempts++;
       } while (
@@ -239,17 +239,18 @@ const HouseExplorerGame: React.FC<GameProps> = ({
                 
                 {/* Hover progress ring */}
                 {isHovered && (
-                  <div className="absolute inset-0 rounded-full border-4 border-green-400">
-                    <svg className="w-full h-full -rotate-90">
+                  <div className="absolute inset-0 rounded-full">
+                    <svg className="w-full h-full -rotate-90" style={{ overflow: 'visible' }}>
                       <circle
                         cx="50%"
                         cy="50%"
-                        r="45%"
+                        r="50%"
                         fill="none"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                        strokeDasharray={`${hoverProgress * 100} 100`}
-                        className="text-green-500 transition-all duration-100"
+                        stroke="#10B981"
+                        strokeWidth="3"
+                        strokeDasharray={`${hoverProgress * Math.PI * (item.size || 40)} ${Math.PI * (item.size || 40)}`}
+                        className="transition-all duration-100"
+                        strokeLinecap="round"
                       />
                     </svg>
                   </div>
