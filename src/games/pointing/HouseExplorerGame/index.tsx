@@ -34,12 +34,26 @@ const HouseExplorerGame: React.FC<GameProps> = ({
     onGameComplete
   });
 
+  // Calculate item size based on current star level
+  const getItemSizeForStar = useCallback((star: number) => {
+    // Star 1: 60-80px, Star 2: 50-70px, Star 3: 40-60px, Star 4: 35-50px, Star 5: 30-45px
+    const sizeConfig = {
+      1: { min: 60, max: 80 },
+      2: { min: 50, max: 70 },
+      3: { min: 40, max: 60 },
+      4: { min: 35, max: 50 },
+      5: { min: 30, max: 45 }
+    };
+    return sizeConfig[star as keyof typeof sizeConfig] || sizeConfig[1];
+  }, []);
+
   // Generate items when game starts
   const generateItems = useCallback(() => {
     if (!gameState.isStarted) return;
     
     const currentLevel = HOUSE_EXPLORER_STAR_LEVELS[gameState.currentStar - 1];
     const itemCount = currentLevel ? currentLevel.target : 5;
+    const sizeConfig = getItemSizeForStar(gameState.currentStar);
     const newItems: HouseItem[] = [];
     
     for (let i = 0; i < itemCount; i++) {
@@ -49,18 +63,18 @@ const HouseExplorerGame: React.FC<GameProps> = ({
       
       do {
         position = {
-          x: Math.random() * (GAME_AREA.width - ITEM_CONFIG.MAX_SIZE - ITEM_CONFIG.SPAWN_PADDING) + ITEM_CONFIG.SPAWN_PADDING,
-          y: Math.random() * (GAME_AREA.height - ITEM_CONFIG.MAX_SIZE - ITEM_CONFIG.SPAWN_PADDING - 120) + ITEM_CONFIG.SPAWN_PADDING + 80
+          x: Math.random() * (GAME_AREA.width - sizeConfig.max - ITEM_CONFIG.SPAWN_PADDING) + ITEM_CONFIG.SPAWN_PADDING,
+          y: Math.random() * (GAME_AREA.height - sizeConfig.max - ITEM_CONFIG.SPAWN_PADDING - 120) + ITEM_CONFIG.SPAWN_PADDING + 80
         };
         attempts++;
       } while (
         attempts < 20 && 
         newItems.some(item => 
-          calculateDistance(position, item.position) < ITEM_CONFIG.MIN_DISTANCE
+          calculateDistance(position, item.position) < (sizeConfig.max + 20)
         )
       );
       
-      const size = ITEM_CONFIG.MIN_SIZE + Math.random() * (ITEM_CONFIG.MAX_SIZE - ITEM_CONFIG.MIN_SIZE);
+      const size = sizeConfig.min + Math.random() * (sizeConfig.max - sizeConfig.min);
       
       newItems.push({
         id: generateId(),
@@ -77,7 +91,7 @@ const HouseExplorerGame: React.FC<GameProps> = ({
     }
     
     setItems(newItems);
-  }, [gameState.isStarted, gameState.currentStar]);
+  }, [gameState.isStarted, gameState.currentStar, getItemSizeForStar]);
 
   // Handle mouse movement
   const handleMouseMove = useCallback((event: React.MouseEvent) => {
@@ -239,16 +253,20 @@ const HouseExplorerGame: React.FC<GameProps> = ({
                 
                 {/* Hover progress ring */}
                 {isHovered && (
-                  <div className="absolute inset-0 rounded-full">
-                    <svg className="w-full h-full -rotate-90" style={{ overflow: 'visible' }}>
+                  <div className="absolute inset-0">
+                    <svg 
+                      className="w-full h-full -rotate-90" 
+                      style={{ overflow: 'visible' }}
+                      viewBox="0 0 100 100"
+                    >
                       <circle
-                        cx="50%"
-                        cy="50%"
-                        r="50%"
+                        cx="50"
+                        cy="50"
+                        r="48"
                         fill="none"
                         stroke="#10B981"
-                        strokeWidth="3"
-                        strokeDasharray={`${hoverProgress * Math.PI * (item.size || 40)} ${Math.PI * (item.size || 40)}`}
+                        strokeWidth="4"
+                        strokeDasharray={`${hoverProgress * 301.59} 301.59`}
                         className="transition-all duration-100"
                         strokeLinecap="round"
                       />
